@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools - .claude Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --claude-dark: #141413;
+            --claude-primary: #D97757;
+            --claude-primary-light: #E8917B;
+            --claude-primary-dark: #C45A3B;
+            --claude-cream: #F5F4ED;
+            --claude-cream-light: #FAF9F5;
+            --claude-cream-dark: #EFEEE3;
+        }
+        
+        .font-sans {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        .font-serif {
+            font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+        }
+        
+        .bg-claude-dark { background-color: var(--claude-dark); }
+        .bg-claude-primary { background-color: var(--claude-primary); }
+        .bg-claude-cream { background-color: var(--claude-cream); }
+        .bg-claude-cream-light { background-color: var(--claude-cream-light); }
+        
+        .text-claude-dark { color: var(--claude-dark); }
+        .text-claude-primary { color: var(--claude-primary); }
+        
+        .border-claude-200 { border-color: #EFEEE3; }
+        .border-claude-primary { border-color: var(--claude-primary); }
+        
+        .hover\:text-claude-primary:hover { color: var(--claude-primary); }
+        .hover\:text-claude-dark:hover { color: var(--claude-dark); }
+        .hover\:border-claude-primary:hover { border-color: var(--claude-primary); }
+        
+        .tag {
+            @apply inline-block px-2 py-1 text-xs font-medium rounded-md mr-2 mb-2;
+        }
+        .tag-development { @apply bg-blue-100 text-blue-800; }
+        .tag-database { @apply bg-green-100 text-green-800; }
+        .tag-web { @apply bg-purple-100 text-purple-800; }
+        .tag-productivity { @apply bg-yellow-100 text-yellow-800; }
+        .tag-ai { @apply bg-pink-100 text-pink-800; }
+        .tag-cloud { @apply bg-indigo-100 text-indigo-800; }
+        .tag-communication { @apply bg-orange-100 text-orange-800; }
+        .tag-search { @apply bg-red-100 text-red-800; }
+    </style>
+</head>
+<body class="font-sans" style="background: linear-gradient(135deg, var(--claude-cream-light), var(--claude-cream));">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">.C</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
+                    <span class="text-claude-dark/60 text-lg">/ tools</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
+                    <a href="/tools" class="text-claude-primary font-medium">Tools</a>
+                    <a href="/configs" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-6xl mx-auto px-6 py-16 text-center">
+        <h1 class="text-5xl font-bold text-claude-dark mb-6 font-serif">MCP Tools & Servers</h1>
+        <p class="text-xl text-claude-dark/70 mb-8 max-w-3xl mx-auto">
+            Discover powerful Model Context Protocol servers that extend Claude Code's capabilities. 
+            From databases to web scraping, these tools connect your AI workflow to the world.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <button class="tag tag-development" onclick="filterTools('development')">Development</button>
+            <button class="tag tag-database" onclick="filterTools('database')">Database</button>
+            <button class="tag tag-web" onclick="filterTools('web')">Web & Search</button>
+            <button class="tag tag-productivity" onclick="filterTools('productivity')">Productivity</button>
+            <button class="tag tag-ai" onclick="filterTools('ai')">AI Services</button>
+            <button class="tag tag-cloud" onclick="filterTools('cloud')">Cloud</button>
+            <button class="tag tag-communication" onclick="filterTools('communication')">Communication</button>
+            <button class="px-4 py-2 text-sm font-medium text-claude-dark border border-claude-dark/20 rounded-lg hover:border-claude-primary transition-colors" onclick="filterTools('all')">Show All</button>
+        </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="tools-grid">
+            
+            <!-- GitHub MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="development">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-development">Development</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">GitHub MCP</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Official GitHub integration for repository management, issue tracking, PR creation, and code search.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">@modelcontextprotocol</span>
+                    <a href="https://github.com/modelcontextprotocol/servers" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- PostgreSQL MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="database">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.128 0C15.892 0 14.458.372 12.964.949L12.964.949C11.47 1.526 9.916 2.306 8.674 3.287L8.674 3.287C7.432 4.268 6.502 5.449 6.502 6.72L6.502 6.72L6.502 17.28C6.502 18.551 7.432 19.732 8.674 20.713L8.674 20.713C9.916 21.694 11.47 22.474 12.964 23.051L12.964 23.051C14.458 23.628 15.892 24 17.128 24L17.128 24C18.364 24 19.798 23.628 21.292 23.051L21.292 23.051C22.786 22.474 24.34 21.694 25.582 20.713L25.582 20.713C26.824 19.732 27.754 18.551 27.754 17.28L27.754 17.28L27.754 6.72C27.754 5.449 26.824 4.268 25.582 3.287L25.582 3.287C24.34 2.306 22.786 1.526 21.292.949L21.292.949C19.798.372 18.364 0 17.128 0Z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-database">Database</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">PostgreSQL</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Read-only database access with schema inspection, query execution, and data analysis capabilities.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Official</span>
+                    <a href="https://github.com/modelcontextprotocol/servers" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- Brave Search MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="web">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-web">Web & Search</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Brave Search</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Web and local search capabilities using Brave's privacy-focused search API for real-time information.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Official</span>
+                    <a href="https://github.com/modelcontextprotocol/servers" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- Slack MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="communication">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-communication">Communication</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Slack</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Send messages, read channels, manage workspaces, and integrate team communication workflows.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Community</span>
+                    <a href="https://github.com/wong2/awesome-mcp-servers" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- AWS MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="cloud">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.87 7.71c0-.28.23-.51.51-.51s.51.23.51.51-.23.51-.51.51-.51-.23-.51-.51zm-.51 1.02h1.02v4.84H6.36v-4.84zm2.04 0h1.02v3.26c0 .43.35.78.78.78s.78-.35.78-.78V8.73h1.02v3.26c0 .99-.8 1.79-1.8 1.79s-1.8-.8-1.8-1.79V8.73zm4.59 0h1.02v1.02h.74c.71 0 1.29.58 1.29 1.29v1.53c0 .71-.58 1.29-1.29 1.29h-1.76V8.73zm1.02 1.02v2.82h.74c.14 0 .27-.13.27-.27v-1.53c0-.14-.13-.27-.27-.27h-.74zm-9.16-6.12c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-cloud">Cloud</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">AWS</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Manage AWS resources, execute CLI commands, and integrate with cloud infrastructure services.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Community</span>
+                    <a href="https://github.com/alexei-led/aws-mcp-server" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- Notion MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="productivity">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466l1.823 1.447zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933l3.222-.187z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-productivity">Productivity</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Notion</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Create, read, and update Notion pages, databases, and blocks for seamless knowledge management.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Community</span>
+                    <a href="https://github.com/wong2/awesome-mcp-servers" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- OpenAI MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="ai">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5774a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142-.0852 4.783-2.7582a.7712.7712 0 0 0 .7806 0l5.8428 3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-ai">AI Services</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Any Chat Completions</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Connect to OpenAI, Perplexity, Groq, xAI and other OpenAI-compatible chat completion APIs.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Community</span>
+                    <a href="https://github.com/wong2/awesome-mcp-servers" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- Stripe MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="productivity">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.274 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-productivity">Productivity</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Stripe</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Manage payments, customers, subscriptions, and financial data through Stripe's powerful API.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Official</span>
+                    <a href="https://github.com/stripe/stripe-mcp-server" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+            <!-- Kubernetes MCP -->
+            <div class="tool-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="cloud">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M10.204 14.35l.007.01-.999 2.413a5.171 5.171 0 0 1-2.075-2.597l2.578-.437.004.005a1.809 1.809 0 0 0 .485.606zm1.823.19l2.138 1.607a5.193 5.193 0 0 1-2.849 1.26l-.835-2.817a1.83 1.83 0 0 0 1.546.0l.05-.05zm2.386-5.327c0-.013-.001-.026-.004-.038L16.99 6.8a5.21 5.21 0 0 1 1.329 2.95l-2.85.659-.077-.048a1.835 1.835 0 0 0-.779-1.198zm-5.025-.08a1.834 1.834 0 0 0-.766 1.198l-.077.048-2.85-.659A5.21 5.21 0 0 1 6.82 6.8l2.578 2.375c-.003.012-.003.025-.004.038h-.006zm2.608-3.575l.835 2.817a1.83 1.83 0 0 0-1.546-.05l-.05.05L8.697 6.768a5.193 5.193 0 0 1 2.849-1.26l.05-.05zm.53 4.72a.848.848 0 1 1 0 1.696.848.848 0 0 1 0-1.696zm-.53.848a1.833 1.833 0 0 0-.866-.692L9.991 7.615a5.17 5.17 0 0 1 2.075 2.597l-2.578.437-.004-.005a1.808 1.808 0 0 0-.485-.606l.999-2.413zm-1.095 3.144l-.05.05-2.138-1.607a5.193 5.193 0 0 1-.05-2.95l2.85.659.077.048a1.835 1.835 0 0 0 .779 1.198l-.468.602zm3.816-2.445a1.835 1.835 0 0 0 .779-1.198l.077-.048 2.85-.659a5.193 5.193 0 0 1-.05 2.95l-2.138-1.607-.518.562z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-cloud">Cloud</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Kubernetes</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Manage Kubernetes clusters, deployments, pods, and services with secure CLI command execution.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Community</span>
+                    <a href="https://github.com/reza-gholizade/k8s-mcp-server" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Install →</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button class="px-8 py-4 bg-claude-dark text-white font-semibold rounded-lg hover:bg-claude-dark/90 transition-all duration-200">
+                Browse All 200+ Tools →
+            </button>
+        </div>
+    </section>
+
+    <!-- Quick Install Guide -->
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+        <div class="bg-claude-cream rounded-xl p-8">
+            <h2 class="text-2xl font-bold text-claude-dark mb-6 font-serif">Quick Install Guide</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-claude-dark mb-3">Install via NPM</h3>
+                    <div class="bg-claude-dark rounded-lg p-4 text-white font-mono text-sm">
+                        <span class="text-green-400">$</span> npx -y @modelcontextprotocol/server-github
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-claude-dark mb-3">Configure in Claude Code</h3>
+                    <div class="bg-claude-dark rounded-lg p-4 text-white font-mono text-sm">
+                        <span class="text-green-400">$</span> claude mcp add
+                    </div>
+                </div>
+            </div>
+            <p class="text-claude-dark/70 text-sm mt-4">Most MCP servers can be installed via npm, pip, or direct download. Check individual repositories for specific setup instructions.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-6 py-12 border-t border-claude-200">
+        <div class="text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">.C</span>
+                </div>
+                <span class="text-2xl font-bold text-claude-dark">.claude</span>
+            </div>
+            <p class="text-claude-dark/60 mb-6">Your ultimate directory for Claude Code tools and configurations.</p>
+            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60">
+                <a href="/" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="/tools" class="hover:text-claude-primary transition-colors">Tools</a>
+                <a href="/configs" class="hover:text-claude-primary transition-colors">Configs</a>
+                <a href="/contribute" class="hover:text-claude-primary transition-colors">Contribute</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function filterTools(category) {
+            const cards = document.querySelectorAll('.tool-card');
+            const buttons = document.querySelectorAll('.tag, button');
+            
+            // Reset button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-offset-2');
+            });
+            
+            if (category === 'all') {
+                cards.forEach(card => {
+                    card.style.display = 'block';
+                });
+            } else {
+                cards.forEach(card => {
+                    if (card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Highlight active filter
+                event.target.classList.add('ring-2', 'ring-offset-2');
+            }
+        }
+    </script>
+</body>
+</html>
