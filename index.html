@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.claude - Your Claude Code Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --claude-dark: #141413;
+            --claude-primary: #D97757;
+            --claude-primary-light: #E8917B;
+            --claude-primary-dark: #C45A3B;
+            --claude-cream: #F5F4ED;
+            --claude-cream-light: #FAF9F5;
+            --claude-cream-dark: #EFEEE3;
+            --claude-50: #FAF9F5;
+            --claude-100: #F5F4ED;
+            --claude-200: #EFEEE3;
+            --claude-300: #E8E6D9;
+            --claude-400: #DDD9C8;
+            --claude-500: #D1CCB7;
+            --claude-600: #C4BFA6;
+            --claude-700: #B8B295;
+            --claude-800: #D97757;
+            --claude-900: #C45A3B;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        .animate-slide-up-delay-1 {
+            animation: slideUp 0.8s ease-out 0.1s both;
+        }
+        
+        .animate-slide-up-delay-2 {
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .font-sans {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        .font-serif {
+            font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+        }
+        
+        .bg-claude-50 { background-color: var(--claude-50); }
+        .bg-claude-100 { background-color: var(--claude-100); }
+        .bg-claude-200 { background-color: var(--claude-200); }
+        .bg-claude-300 { background-color: var(--claude-300); }
+        .bg-claude-400 { background-color: var(--claude-400); }
+        .bg-claude-500 { background-color: var(--claude-500); }
+        .bg-claude-600 { background-color: var(--claude-600); }
+        .bg-claude-700 { background-color: var(--claude-700); }
+        .bg-claude-800 { background-color: var(--claude-800); }
+        .bg-claude-900 { background-color: var(--claude-900); }
+        .bg-claude-primary { background-color: var(--claude-primary); }
+        .bg-claude-dark { background-color: var(--claude-dark); }
+        .bg-claude-cream { background-color: var(--claude-cream); }
+        
+        .text-claude-50 { color: var(--claude-50); }
+        .text-claude-100 { color: var(--claude-100); }
+        .text-claude-200 { color: var(--claude-200); }
+        .text-claude-300 { color: var(--claude-300); }
+        .text-claude-400 { color: var(--claude-400); }
+        .text-claude-500 { color: var(--claude-500); }
+        .text-claude-600 { color: var(--claude-600); }
+        .text-claude-700 { color: var(--claude-700); }
+        .text-claude-800 { color: var(--claude-800); }
+        .text-claude-900 { color: var(--claude-900); }
+        .text-claude-primary { color: var(--claude-primary); }
+        .text-claude-dark { color: var(--claude-dark); }
+        
+        .border-claude-200 { border-color: var(--claude-200); }
+        .border-claude-300 { border-color: var(--claude-300); }
+        .border-claude-400 { border-color: var(--claude-400); }
+        .border-claude-primary { border-color: var(--claude-primary); }
+        .border-claude-dark { border-color: var(--claude-dark); }
+        
+        .hover\:text-claude-700:hover { color: var(--claude-700); }
+        .hover\:text-claude-800:hover { color: var(--claude-800); }
+        .hover\:text-claude-primary:hover { color: var(--claude-primary); }
+        .hover\:text-claude-dark:hover { color: var(--claude-dark); }
+        .hover\:bg-claude-50:hover { background-color: var(--claude-50); }
+        .hover\:bg-claude-cream:hover { background-color: var(--claude-cream); }
+        .hover\:bg-white:hover { background-color: white; }
+        .hover\:border-claude-400:hover { border-color: var(--claude-400); }
+        .hover\:border-claude-primary:hover { border-color: var(--claude-primary); }
+        .hover\:border-claude-dark:hover { border-color: var(--claude-dark); }
+        
+        .bg-gradient-claude {
+            background: linear-gradient(135deg, var(--claude-primary), var(--claude-900));
+        }
+        
+        .bg-gradient-claude-light {
+            background: linear-gradient(135deg, var(--claude-primary), var(--claude-primary-light));
+        }
+        
+        .bg-gradient-claude-bg {
+            background: linear-gradient(135deg, var(--claude-50), var(--claude-100));
+        }
+        
+        .text-gradient-claude {
+            background: linear-gradient(135deg, var(--claude-primary), var(--claude-900));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .rounded-lg { border-radius: 8px; }
+        .rounded-xl { border-radius: 12px; }
+        .rounded-2xl { border-radius: 16px; }
+    </style>
+</head>
+    <body class="bg-gradient-claude-bg min-h-screen font-sans">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">C</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#tools" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
+                    <a href="#configs" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
+                    <a href="#guides" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Guides</a>
+                    <a href="#community" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Community</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-6xl mx-auto px-6 py-16 text-center animate-fade-in">
+        <div class="max-w-3xl mx-auto">
+            <div class="inline-flex items-center px-4 py-2 bg-claude-200/50 rounded-lg mb-8 animate-float">
+                <span class="text-claude-primary font-medium text-sm">⚡ The Ultimate Claude Code Directory</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-6xl font-bold text-claude-dark mb-6 leading-tight font-serif">
+                Your Curated Collection of 
+                <span class="text-gradient-claude">Claude Code</span> 
+                Excellence
+            </h1>
+            
+            <p class="text-xl text-claude-dark/80 mb-10 leading-relaxed">
+                Discover the most powerful configurations, tools, and workflows that make Claude Code an indispensable part of your development process. From CLAUDE.md templates to MCP integrations.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button class="px-8 py-4 bg-claude-dark text-white font-semibold rounded-lg hover:bg-claude-dark/90 hover:scale-105 transition-all duration-200">
+                    Explore Tools →
+                </button>
+                <button class="px-8 py-4 border-2 border-claude-dark text-claude-dark font-semibold rounded-lg hover:bg-white hover:border-claude-primary transition-all duration-200">
+                    Browse Configs
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="max-w-6xl mx-auto px-6 py-16">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- CLAUDE.md Templates -->
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-claude-200 hover:shadow-xl transition-all duration-300 animate-slide-up">
+                <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">CLAUDE.md Templates</h3>
+                <p class="text-gray-700 mb-6">Curated collection of the most effective CLAUDE.md configurations for different project types, from React apps to Python backends.</p>
+                <a href="#" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">Browse Templates →</a>
+            </div>
+
+            <!-- MCP Integrations -->
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-claude-200 hover:shadow-xl transition-all duration-300 animate-slide-up-delay-1">
+                <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">MCP Integrations</h3>
+                <p class="text-gray-700 mb-6">Essential Model Context Protocol servers and configurations that extend Claude Code's capabilities with external tools and APIs.</p>
+                <a href="#" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">View Integrations →</a>
+            </div>
+
+            <!-- Custom Commands -->
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-claude-200 hover:shadow-xl transition-all duration-300 animate-slide-up-delay-2">
+                <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Custom Commands</h3>
+                <p class="text-gray-700 mb-6">Ready-to-use slash commands for common workflows like debugging, testing, documentation, and code reviews.</p>
+                <a href="#" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">Get Commands →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Provide Section -->
+    <section class="max-w-6xl mx-auto px-6 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-claude-dark mb-4 font-serif">Everything You Need for Claude Code</h2>
+            <p class="text-xl text-claude-dark/70">An awesome list of tools, configurations, and best practices.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-claude-dark mb-2">Project Configuration Templates</h4>
+                        <p class="text-claude-dark/70">Tested CLAUDE.md files for popular frameworks and development environments.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-claude-dark mb-2">Workflow Automation</h4>
+                        <p class="text-claude-dark/70">Custom commands for TDD, debugging loops, and deployment processes.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-claude-dark mb-2">Integration Guides</h4>
+                        <p class="text-claude-dark/70">Step-by-step setup for GitHub, Docker, cloud platforms, and development tools.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-claude-dark mb-2">Security Best Practices</h4>
+                        <p class="text-claude-dark/70">Safe configuration patterns and sandboxing recommendations.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-claude-dark mb-2">Community Contributions</h4>
+                        <p class="text-claude-dark/70">Curated tools and configurations shared by the Claude Code community.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-claude-dark mb-2">Performance Optimization</h4>
+                        <p class="text-claude-dark/70">Tips for managing token usage, context optimization, and cost control.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="max-w-6xl mx-auto px-6 py-16">
+        <div class="bg-white/90 rounded-xl p-12 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif text-claude-dark">Ready to Supercharge Your Claude Code Setup?</h2>
+            <p class="text-xl mb-8 text-claude-dark/70">Join thousands of developers who've transformed their coding workflow with our curated resources.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="px-8 py-4 bg-claude-dark text-white font-semibold rounded-lg hover:bg-white/90 hover:text-claude-dark transition-all duration-200">
+                    Get Started Now
+                </button>
+                <button class="px-8 py-4 border-2 border-claude-dark/30 text-claude-dark font-semibold rounded-lg hover:bg-white/10 transition-all duration-200">
+                    Browse Collection
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-6 py-12 border-t border-claude-200">
+        <div class="text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">C</span>
+                </div>
+                <span class="text-2xl font-bold text-claude-dark">.claude</span>
+            </div>
+            <p class="text-claude-dark/60 mb-6">Your ultimate directory for Claude Code tools and configurations.</p>
+            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60">
+                <a href="#" class="hover:text-claude-primary transition-colors">About</a>
+                <a href="#" class="hover:text-claude-primary transition-colors">Contribute</a>
+                <a href="#" class="hover:text-claude-primary transition-colors">Community</a>
+                <a href="#" class="hover:text-claude-primary transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
