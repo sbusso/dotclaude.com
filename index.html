@@ -24,6 +24,37 @@
             --claude-700: #B8B295;
             --claude-800: #D97757;
             --claude-900: #C45A3B;
+            
+            /* Light mode (default) */
+            --bg-primary: var(--claude-cream-light);
+            --bg-secondary: var(--claude-cream);
+            --bg-surface: rgba(255, 255, 255, 0.9);
+            --bg-surface-solid: #ffffff;
+            --text-primary: var(--claude-dark);
+            --text-secondary: rgba(20, 20, 19, 0.8);
+            --text-muted: rgba(20, 20, 19, 0.7);
+            --border-color: var(--claude-200);
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --button-bg: var(--claude-dark);
+            --button-text: #ffffff;
+            --icon-bg: var(--claude-dark);
+            --icon-text: #ffffff;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-surface: rgba(26, 26, 26, 0.9);
+            --bg-surface-solid: #1a1a1a;
+            --text-primary: #f5f4ed;
+            --text-secondary: rgba(245, 244, 237, 0.9);
+            --text-muted: rgba(245, 244, 237, 0.7);
+            --border-color: #333333;
+            --header-bg: rgba(26, 26, 26, 0.9);
+            --button-bg: #f5f4ed;
+            --button-text: var(--claude-dark);
+            --icon-bg: #f5f4ed;
+            --icon-text: var(--claude-dark);
         }
         
         @keyframes fadeIn {
@@ -135,7 +166,103 @@
         .rounded-lg { border-radius: 8px; }
         .rounded-xl { border-radius: 12px; }
         .rounded-2xl { border-radius: 16px; }
+        
+        /* Dark mode toggle */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .theme-toggle::before {
+            transform: translateX(30px);
+        }
+        
+        /* Apply dark mode styles */
+        body {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)) !important;
+            color: var(--text-primary);
+        }
+        
+        .bg-white\/90 {
+            background-color: var(--header-bg) !important;
+        }
+        
+        .bg-white\/80 {
+            background-color: var(--bg-surface) !important;
+        }
+        
+        .bg-white {
+            background-color: var(--bg-surface-solid) !important;
+        }
+        
+        .border-claude-200 {
+            border-color: var(--border-color) !important;
+        }
+        
+        .text-claude-dark {
+            color: var(--text-primary) !important;
+        }
+        
+        .text-claude-dark\/80 {
+            color: var(--text-secondary) !important;
+        }
+        
+        .text-claude-dark\/70 {
+            color: var(--text-muted) !important;
+        }
+        
+        .text-claude-dark\/60 {
+            color: var(--text-muted) !important;
+        }
+        
+        .text-gray-900 {
+            color: var(--text-primary) !important;
+        }
+        
+        .text-gray-700 {
+            color: var(--text-muted) !important;
+        }
+        
+        /* Fix hardcoded colors */
+        .bg-claude-dark {
+            background-color: var(--button-bg) !important;
+        }
+        
+        .text-white {
+            color: var(--button-text) !important;
+        }
+        
+        .w-8.h-8.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
+        
+        .w-10.h-10.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
+        
+        .w-12.h-12.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
     </style>
+    <script defer data-domain="dotclaude.com" src="https://p.kyr.sh/js/script.js"></script>
+
 </head>
     <body class="bg-gradient-claude-bg min-h-screen font-sans">
     <!-- Header -->
@@ -148,9 +275,10 @@
                     </div>
                     <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
                 </div>
-                <nav class="hidden md:flex space-x-8">
+                <nav class="hidden md:flex space-x-8 items-center">
                     <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
                     <a href="configs.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
+                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
                 </nav>
             </div>
         </div>
@@ -326,12 +454,38 @@
             </div>
             <p class="text-claude-dark/60 mb-6">Your ultimate directory for Claude Code tools and configurations.</p>
             <div class="flex justify-center space-x-8 text-sm text-claude-dark/60">
-                <a href="#" class="hover:text-claude-primary transition-colors">About</a>
-                <a href="#" class="hover:text-claude-primary transition-colors">Contribute</a>
-                <a href="#" class="hover:text-claude-primary transition-colors">Community</a>
-                <a href="#" class="hover:text-claude-primary transition-colors">Contact</a>
+                <a href="index.html" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="tools.html" class="hover:text-claude-primary transition-colors">Tools</a>
+                <a href="configs.html" class="hover:text-claude-primary transition-colors">Configs</a>
+                <a href="https://github.com/hesreallyhim/awesome-claude-code" class="hover:text-claude-primary transition-colors">Contribute</a>
             </div>
         </div>
     </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Load saved theme on page load, defaulting to system preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            let theme;
+            
+            if (savedTheme) {
+                theme = savedTheme;
+            } else {
+                // Default to system preference
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            
+            document.documentElement.setAttribute('data-theme', theme);
+        });
+    </script>
 </body>
 </html>

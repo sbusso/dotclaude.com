@@ -14,6 +14,41 @@
             --claude-cream: #F5F4ED;
             --claude-cream-light: #FAF9F5;
             --claude-cream-dark: #EFEEE3;
+            
+            /* Light mode (default) */
+            --bg-primary: var(--claude-cream-light);
+            --bg-secondary: var(--claude-cream);
+            --bg-surface: rgba(255, 255, 255, 0.8);
+            --bg-surface-solid: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-text: var(--claude-dark);
+            --text-primary: var(--claude-dark);
+            --text-secondary: rgba(20, 20, 19, 0.8);
+            --text-muted: rgba(20, 20, 19, 0.7);
+            --border-color: #EFEEE3;
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --button-bg: var(--claude-dark);
+            --button-text: #ffffff;
+            --icon-bg: var(--claude-dark);
+            --icon-text: #ffffff;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-surface: rgba(26, 26, 26, 0.9);
+            --bg-surface-solid: #1a1a1a;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-text: #f5f4ed;
+            --text-primary: #f5f4ed;
+            --text-secondary: rgba(245, 244, 237, 0.9);
+            --text-muted: rgba(245, 244, 237, 0.7);
+            --border-color: #333333;
+            --header-bg: rgba(26, 26, 26, 0.9);
+            --button-bg: #f5f4ed;
+            --button-text: var(--claude-dark);
+            --icon-bg: #f5f4ed;
+            --icon-text: var(--claude-dark);
         }
         
         .font-sans {
@@ -48,6 +83,106 @@
         .tag-template { @apply bg-yellow-100 text-yellow-800; }
         .tag-command { @apply bg-pink-100 text-pink-800; }
         .tag-project { @apply bg-indigo-100 text-indigo-800; }
+        
+        /* Dark mode toggle */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .theme-toggle::before {
+            transform: translateX(30px);
+        }
+        
+        /* Apply dark mode styles */
+        body {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)) !important;
+            color: var(--text-primary);
+        }
+        
+        .bg-white\/90 {
+            background-color: var(--header-bg) !important;
+        }
+        
+        .bg-white\/80 {
+            background-color: var(--bg-surface) !important;
+        }
+        
+        .bg-white {
+            background-color: var(--bg-surface-solid) !important;
+        }
+        
+        .bg-white\/60 {
+            background-color: var(--bg-surface) !important;
+        }
+        
+        /* Fix card backgrounds specifically */
+        .config-card {
+            background-color: var(--card-bg) !important;
+            color: var(--card-text) !important;
+        }
+        
+        .config-card * {
+            color: inherit !important;
+        }
+        
+        .border-claude-200 {
+            border-color: var(--border-color) !important;
+        }
+        
+        .text-claude-dark {
+            color: var(--text-primary) !important;
+        }
+        
+        .text-claude-dark\/80 {
+            color: var(--text-secondary) !important;
+        }
+        
+        .text-claude-dark\/70 {
+            color: var(--text-muted) !important;
+        }
+        
+        .text-claude-dark\/60 {
+            color: var(--text-muted) !important;
+        }
+        
+        .text-claude-dark\/50 {
+            color: var(--text-muted) !important;
+        }
+        
+        /* Fix hardcoded colors */
+        .bg-claude-dark {
+            background-color: var(--button-bg) !important;
+        }
+        
+        .text-white {
+            color: var(--button-text) !important;
+        }
+        
+        .w-8.h-8.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
+        
+        .w-10.h-10.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
     </style>
 </head>
 <body class="font-sans" style="background: linear-gradient(135deg, var(--claude-cream-light), var(--claude-cream));">
@@ -62,10 +197,11 @@
                     <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
                     <span class="text-claude-dark/60 text-lg">/ configs</span>
                 </div>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="/" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
-                    <a href="/tools" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
-                    <a href="/configs" class="text-claude-primary font-medium">Configs</a>
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
+                    <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
+                    <a href="configs.html" class="text-claude-primary font-medium">Configs</a>
+                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
                 </nav>
             </div>
         </div>
@@ -303,7 +439,7 @@
 
     <!-- Quick Setup Guide -->
     <section class="max-w-6xl mx-auto px-6 pb-16">
-        <div class="bg-claude-cream rounded-xl p-8">
+        <div class="rounded-xl p-8">
             <h2 class="text-2xl font-bold text-claude-dark mb-6 font-serif">Quick Setup Guide</h2>
             <div class="grid md:grid-cols-2 gap-8">
                 <div>
@@ -346,10 +482,10 @@
             </div>
             <p class="text-claude-dark/60 mb-6">Your ultimate directory for Claude Code tools and configurations.</p>
             <div class="flex justify-center space-x-8 text-sm text-claude-dark/60">
-                <a href="/" class="hover:text-claude-primary transition-colors">Home</a>
-                <a href="/tools" class="hover:text-claude-primary transition-colors">Tools</a>
-                <a href="/configs" class="hover:text-claude-primary transition-colors">Configs</a>
-                <a href="/contribute" class="hover:text-claude-primary transition-colors">Contribute</a>
+                <a href="index.html" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="tools.html" class="hover:text-claude-primary transition-colors">Tools</a>
+                <a href="configs.html" class="hover:text-claude-primary transition-colors">Configs</a>
+                <a href="https://github.com/hesreallyhim/awesome-claude-code" class="hover:text-claude-primary transition-colors">Contribute</a>
             </div>
         </div>
     </footer>
@@ -381,6 +517,30 @@
                 event.target.classList.add('ring-2', 'ring-offset-2');
             }
         }
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Load saved theme on page load, defaulting to system preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            let theme;
+            
+            if (savedTheme) {
+                theme = savedTheme;
+            } else {
+                // Default to system preference
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            
+            document.documentElement.setAttribute('data-theme', theme);
+        });
     </script>
 </body>
 </html>
