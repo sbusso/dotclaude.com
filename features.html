@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - .claude Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --claude-dark: #141413;
+            --claude-primary: #D97757;
+            --claude-primary-light: #E8917B;
+            --claude-primary-dark: #C45A3B;
+            --claude-cream: #F5F4ED;
+            --claude-cream-light: #FAF9F5;
+            --claude-cream-dark: #EFEEE3;
+
+            /* Light mode (default) */
+            --bg-primary: var(--claude-cream-light);
+            --bg-secondary: var(--claude-cream);
+            --bg-surface: rgba(255, 255, 255, 0.8);
+            --bg-surface-solid: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-text: var(--claude-dark);
+            --text-primary: var(--claude-dark);
+            --text-secondary: rgba(20, 20, 19, 0.8);
+            --text-muted: rgba(20, 20, 19, 0.7);
+            --border-color: #EFEEE3;
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --button-bg: var(--claude-dark);
+            --button-text: #ffffff;
+            --icon-bg: var(--claude-dark);
+            --icon-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-surface: rgba(26, 26, 26, 0.9);
+            --bg-surface-solid: #1a1a1a;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-text: #f5f4ed;
+            --text-primary: #f5f4ed;
+            --text-secondary: rgba(245, 244, 237, 0.9);
+            --text-muted: rgba(245, 244, 237, 0.7);
+            --border-color: #333333;
+            --header-bg: rgba(26, 26, 26, 0.9);
+            --button-bg: #f5f4ed;
+            --button-text: var(--claude-dark);
+            --icon-bg: #f5f4ed;
+            --icon-text: var(--claude-dark);
+        }
+
+        .font-sans {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .font-serif {
+            font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+        }
+
+        .bg-claude-dark { background-color: var(--claude-dark); }
+        .bg-claude-primary { background-color: var(--claude-primary); }
+        .bg-claude-cream { background-color: var(--claude-cream); }
+        .bg-claude-cream-light { background-color: var(--claude-cream-light); }
+
+        .text-claude-dark { color: var(--claude-dark); }
+        .text-claude-primary { color: var(--claude-primary); }
+
+        .border-claude-200 { border-color: #EFEEE3; }
+        .border-claude-primary { border-color: var(--claude-primary); }
+
+        .hover\:text-claude-primary:hover { color: var(--claude-primary); }
+        .hover\:text-claude-dark:hover { color: var(--claude-dark); }
+        .hover\:border-claude-primary:hover { border-color: var(--claude-primary); }
+
+        .tag {
+            @apply inline-block px-2 py-1 text-xs font-medium rounded-md mr-2 mb-2;
+        }
+        .tag-core { @apply bg-blue-100 text-blue-800; }
+        .tag-agent { @apply bg-purple-100 text-purple-800; }
+        .tag-extension { @apply bg-green-100 text-green-800; }
+        .tag-workflow { @apply bg-yellow-100 text-yellow-800; }
+        .tag-integration { @apply bg-pink-100 text-pink-800; }
+        .tag-enterprise { @apply bg-indigo-100 text-indigo-800; }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .theme-toggle::before {
+            transform: translateX(30px);
+        }
+
+        /* Apply dark mode styles */
+        body {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)) !important;
+            color: var(--text-primary);
+        }
+
+        .bg-white\/90 {
+            background-color: var(--header-bg) !important;
+        }
+
+        .bg-white\/80 {
+            background-color: var(--bg-surface) !important;
+        }
+
+        .bg-white\/60 {
+            background-color: var(--bg-surface) !important;
+        }
+
+        .bg-white {
+            background-color: var(--bg-surface-solid) !important;
+        }
+
+        /* Fix card backgrounds specifically */
+        .feature-card {
+            background-color: var(--card-bg) !important;
+            color: var(--card-text) !important;
+        }
+
+        .feature-card * {
+            color: inherit !important;
+        }
+
+        .border-claude-200 {
+            border-color: var(--border-color) !important;
+        }
+
+        .text-claude-dark {
+            color: var(--text-primary) !important;
+        }
+
+        .text-claude-dark\/80 {
+            color: var(--text-secondary) !important;
+        }
+
+        .text-claude-dark\/70 {
+            color: var(--text-muted) !important;
+        }
+
+        .text-claude-dark\/60 {
+            color: var(--text-muted) !important;
+        }
+
+        .text-claude-dark\/50 {
+            color: var(--text-muted) !important;
+        }
+
+        /* Fix hardcoded colors */
+        .bg-claude-dark {
+            background-color: var(--button-bg) !important;
+        }
+
+        .text-white {
+            color: var(--button-text) !important;
+        }
+
+        .w-8.h-8.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
+
+        .w-10.h-10.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
+
+        .w-12.h-12.bg-claude-dark {
+            background-color: var(--icon-bg) !important;
+        }
+    </style>
+</head>
+<body class="font-sans" style="background: linear-gradient(135deg, var(--claude-cream-light), var(--claude-cream));">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">.C</span>
+                        </div>
+                        <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
+                    </a>
+                    <span class="text-claude-dark/60 text-lg">/ features</span>
+                </div>
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
+                    <a href="features.html" class="text-claude-primary font-medium">Features</a>
+                    <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
+                    <a href="configs.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
+                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-6xl mx-auto px-6 py-16 text-center">
+        <h1 class="text-5xl font-bold text-claude-dark mb-6 font-serif">Agentic Coding Features</h1>
+        <p class="text-xl text-claude-dark/70 mb-8 max-w-3xl mx-auto">
+            Claude Code is an agentic coding tool that lives in your terminal, understands your codebase,
+            and helps you code faster through autonomous task execution and intelligent workflows.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <button class="tag tag-core" onclick="filterFeatures('core')">Core</button>
+            <button class="tag tag-agent" onclick="filterFeatures('agent')">Agents</button>
+            <button class="tag tag-extension" onclick="filterFeatures('extension')">Extensions</button>
+            <button class="tag tag-workflow" onclick="filterFeatures('workflow')">Workflows</button>
+            <button class="tag tag-integration" onclick="filterFeatures('integration')">Integrations</button>
+            <button class="tag tag-enterprise" onclick="filterFeatures('enterprise')">Enterprise</button>
+            <button class="px-4 py-2 text-sm font-medium text-claude-dark border border-claude-dark/20 rounded-lg hover:border-claude-primary transition-colors" onclick="filterFeatures('all')">Show All</button>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="features-grid">
+
+            <!-- Sub-Agents -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="agent">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-agent">Agents</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Sub-Agents</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Spawn specialized AI agents for parallel task execution. Each sub-agent has its own context window, tools, and instructions for handling specific tasks like research, testing, or code review.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">/agents command</span>
+                    <a href="agents.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Plugins -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="extension">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-extension">Extensions</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Plugins</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Lightweight packages bundling slash commands, subagents, MCP servers, and hooks. Install with a single command, share via plugin marketplaces, and toggle on/off as needed.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">/plugin command</span>
+                    <a href="plugins.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Hooks -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="extension">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-extension">Extensions</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Hooks</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Automated shell commands that execute at specific lifecycle points. PreToolUse hooks run before actions, PostToolUse hooks run after. Perfect for quality gates and enforcing standards.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">/hooks command</span>
+                    <a href="hooks.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Extended Thinking -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="core">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-core">Core</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Extended Thinking</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Trigger deeper reasoning with escalating phrases: "think" (4K tokens), "think hard" (10K), "think harder" (32K), "ultrathink" (128K). Ideal for complex architectural decisions.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Planning Mode</span>
+                    <a href="https://www.anthropic.com/engineering/claude-code-best-practices" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Slash Commands -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="workflow">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-workflow">Workflows</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Slash Commands</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Custom prompt templates stored as Markdown files in .claude/commands/. Support $ARGUMENTS for dynamic inputs. Share with teams via git or globally via ~/.claude/commands/.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">.claude/commands/</span>
+                    <a href="commands.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- MCP Integration -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="extension">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-extension">Extensions</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">MCP Servers</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Connect to 1000+ community servers via Model Context Protocol. Access databases, APIs, Google Drive, Figma, Slack, and more. Configure via CLI or .mcp.json files.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">claude mcp add</span>
+                    <a href="mcp.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="agent">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-agent">Agents</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Agent Skills</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Reusable capability modules that extend Claude's abilities. Create, manage, and share Skills for task-specific workflows. Activates context-aware features automatically.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">.claude/skills/</span>
+                    <a href="skills.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Headless Mode -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="workflow">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-workflow">Workflows</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Headless Mode</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Run Claude Code programmatically without interactive UI. Use -p flag for CI/CD pipelines, GitHub Actions, and pre-commit hooks. Output structured JSON for automation.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">claude -p "prompt"</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/headless" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Claude Agent SDK -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="agent">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-agent">Agents</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Claude Agent SDK</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Build custom autonomous agents on top of Claude. The SDK that powers Claude Code, now available for finance agents, research assistants, customer support, and more.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Anthropic Official</span>
+                    <a href="https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- VS Code Integration -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="integration">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-integration">Integrations</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">VS Code Extension</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Native VS Code integration with Claude Code. Access agentic coding features directly from your editor with seamless context sharing and inline suggestions.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Official Extension</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/vs-code" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Slack Integration -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="integration">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-integration">Integrations</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Slack Integration</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Hand off full coding tasks directly from Slack conversations. @mention Claude to convert bug reports or feature discussions into actionable coding sessions with PR generation.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Beta Feature</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/slack" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- GitHub Actions -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="integration">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-integration">Integrations</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">GitHub Actions</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Automate code reviews, issue triage, and migrations in CI/CD pipelines. Use headless mode with structured JSON output for automated workflows and monitoring.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">CI/CD Integration</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/github-actions" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- CLAUDE.md -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="core">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-core">Core</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">CLAUDE.md Memory</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Persistent memory file automatically loaded into context. Document commands, style guides, testing instructions, and project conventions. Supports hierarchical loading from parent/child directories.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Project Root</span>
+                    <a href="configs.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Browse Templates</a>
+                </div>
+            </div>
+
+            <!-- Permission Management -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="core">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-core">Core</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Permission Management</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Fine-grained control over Claude's tool access. Configure via /permissions command, .claude/settings.json, or --allowedTools CLI flag. Support for "always allow" patterns.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">/permissions</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/settings" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Amazon Bedrock -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="enterprise">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.176 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.27-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.385.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-enterprise">Enterprise</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Amazon Bedrock</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Deploy Claude Code on AWS infrastructure with enterprise-grade security, compliance, and scalability. Integrates with existing AWS services and IAM policies.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Enterprise</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/amazon-bedrock" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Google Vertex AI -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="enterprise">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-enterprise">Enterprise</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Google Vertex AI</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Run Claude Code on Google Cloud with Vertex AI integration. Enterprise security, data residency controls, and seamless GCP ecosystem integration.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Enterprise</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/google-vertex-ai" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Sandboxing -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="enterprise">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-enterprise">Enterprise</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Sandboxing</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Filesystem and network isolation for secure code execution. Run Claude Code in isolated environments with controlled access to system resources and external services.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Security</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/sandboxing" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Agent Loop Section -->
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+        <div class="bg-white/80 rounded-xl p-8 border border-claude-200">
+            <h2 class="text-2xl font-bold text-claude-dark mb-6 font-serif">The Agentic Feedback Loop</h2>
+            <p class="text-claude-dark/70 mb-8">Claude Code operates in a continuous feedback loop that enables autonomous task completion:</p>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-claude-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">1</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-dark mb-2">Gather Context</h3>
+                    <p class="text-sm text-claude-dark/70">Read files, search code, understand project structure via agentic and semantic search</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-claude-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">2</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-dark mb-2">Take Action</h3>
+                    <p class="text-sm text-claude-dark/70">Edit files, run commands, execute tools, generate code using bash and MCP integrations</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-claude-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">3</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-dark mb-2">Verify Work</h3>
+                    <p class="text-sm text-claude-dark/70">Run tests, lint code, check outputs, visual feedback via screenshots and renders</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-claude-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">4</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-dark mb-2">Repeat</h3>
+                    <p class="text-sm text-claude-dark/70">Iterate until the goal is achieved, self-correcting along the way with compaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Reference -->
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+        <div class="rounded-xl p-8">
+            <h2 class="text-2xl font-bold text-claude-dark mb-6 font-serif">Essential Commands Reference</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-claude-dark mb-3">Core Commands</h3>
+                    <div class="space-y-2">
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-green-400">/</span> - Open slash commands menu
+                        </div>
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-green-400">/agents</span> - Manage sub-agents
+                        </div>
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-green-400">/hooks</span> - Configure lifecycle hooks
+                        </div>
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-green-400">/plugin</span> - Install/manage plugins
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-claude-dark mb-3">Extended Thinking</h3>
+                    <div class="space-y-2">
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-yellow-400">"think"</span> - 4K token budget
+                        </div>
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-yellow-400">"think hard"</span> - 10K token budget
+                        </div>
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-yellow-400">"think harder"</span> - 32K token budget
+                        </div>
+                        <div class="bg-claude-dark rounded-lg p-3 text-white font-mono text-sm">
+                            <span class="text-yellow-400">"ultrathink"</span> - 128K token budget
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-6 py-12 border-t border-claude-200">
+        <div class="text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">.C</span>
+                </div>
+                <span class="text-2xl font-bold text-claude-dark">.claude</span>
+            </div>
+            <p class="text-claude-dark/60 mb-6">Your ultimate directory for Claude Code tools and configurations.</p>
+            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60 mb-4">
+                <a href="index.html" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="features.html" class="hover:text-claude-primary transition-colors">Features</a>
+                <a href="tools.html" class="hover:text-claude-primary transition-colors">Tools</a>
+                <a href="configs.html" class="hover:text-claude-primary transition-colors">Configs</a>
+            </div>
+            <div class="text-xs text-claude-dark/50 text-center max-w-2xl mx-auto">
+                This website is not affiliated with Anthropic. It is a personal initiative with the idea of sharing practices and configurations to optimize workflows using Claude Code.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function filterFeatures(category) {
+            const cards = document.querySelectorAll('.feature-card');
+            const buttons = document.querySelectorAll('.tag, button');
+
+            // Reset button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-offset-2');
+            });
+
+            if (category === 'all') {
+                cards.forEach(card => {
+                    card.style.display = 'block';
+                });
+            } else {
+                cards.forEach(card => {
+                    if (card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Highlight active filter
+                event.target.classList.add('ring-2', 'ring-offset-2');
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme on page load, defaulting to system preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            let theme;
+
+            if (savedTheme) {
+                theme = savedTheme;
+            } else {
+                // Default to system preference
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+
+            document.documentElement.setAttribute('data-theme', theme);
+        });
+    </script>
+</body>
+</html>

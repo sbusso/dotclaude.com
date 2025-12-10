@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plugins - .claude Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        :root {
+            --claude-dark: #141413;
+            --claude-primary: #D97757;
+            --claude-primary-light: #E8917B;
+            --claude-cream: #F5F4ED;
+            --claude-cream-light: #FAF9F5;
+            --bg-primary: var(--claude-cream-light);
+            --bg-secondary: var(--claude-cream);
+            --bg-surface: rgba(255, 255, 255, 0.8);
+            --text-primary: var(--claude-dark);
+            --text-secondary: rgba(20, 20, 19, 0.8);
+            --text-muted: rgba(20, 20, 19, 0.7);
+            --border-color: #EFEEE3;
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --code-bg: #1a1a2e;
+        }
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-surface: rgba(26, 26, 26, 0.9);
+            --text-primary: #f5f4ed;
+            --text-secondary: rgba(245, 244, 237, 0.9);
+            --text-muted: rgba(245, 244, 237, 0.7);
+            --border-color: #333333;
+            --header-bg: rgba(26, 26, 26, 0.9);
+            --code-bg: #0d0d0d;
+        }
+        body { background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)); color: var(--text-primary); }
+        .bg-white\/90 { background-color: var(--header-bg) !important; }
+        .bg-white\/80, .bg-white { background-color: var(--bg-surface) !important; }
+        .text-claude-dark { color: var(--text-primary) !important; }
+        .text-claude-dark\/80 { color: var(--text-secondary) !important; }
+        .text-claude-dark\/70, .text-claude-dark\/60 { color: var(--text-muted) !important; }
+        .border-claude-200 { border-color: var(--border-color) !important; }
+        .bg-claude-dark { background-color: var(--claude-dark); }
+        .text-claude-primary { color: var(--claude-primary); }
+        .hover\:text-claude-primary:hover { color: var(--claude-primary); }
+        .theme-toggle { position: relative; width: 60px; height: 30px; background: var(--border-color); border-radius: 15px; cursor: pointer; transition: all 0.3s ease; }
+        .theme-toggle::before { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: var(--text-primary); border-radius: 50%; transition: all 0.3s ease; }
+        [data-theme="dark"] .theme-toggle::before { transform: translateX(30px); }
+        pre[class*="language-"] { background: var(--code-bg) !important; border-radius: 0.75rem; margin: 1rem 0; }
+        code[class*="language-"] { font-size: 0.875rem; }
+        .prose pre { background: var(--code-bg); padding: 1rem; border-radius: 0.75rem; overflow-x: auto; }
+        .prose code { background: rgba(0,0,0,0.1); padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.875rem; }
+        [data-theme="dark"] .prose code { background: rgba(255,255,255,0.1); }
+        .prose h2 { margin-top: 2rem; margin-bottom: 1rem; }
+        .prose h3 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .prose p, .prose ul, .prose ol { margin-bottom: 1rem; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .prose th, .prose td { border: 1px solid var(--border-color); padding: 0.75rem; text-align: left; }
+        .prose th { background: var(--bg-surface); font-weight: 600; }
+        .toc a { display: block; padding: 0.5rem 0; color: var(--text-muted); transition: color 0.2s; }
+        .toc a:hover { color: var(--claude-primary); }
+        .toc a.active { color: var(--claude-primary); font-weight: 600; }
+    </style>
+</head>
+<body class="font-sans min-h-screen">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">.C</span>
+                        </div>
+                        <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
+                    </a>
+                    <span class="text-claude-dark/60 text-lg">/ plugins</span>
+                </div>
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
+                    <a href="features.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Features</a>
+                    <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
+                    <a href="configs.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
+                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="flex gap-12">
+            <!-- Sidebar TOC -->
+            <aside class="hidden lg:block w-64 flex-shrink-0">
+                <div class="sticky top-24">
+                    <h4 class="font-semibold text-claude-dark mb-4">On this page</h4>
+                    <nav class="toc text-sm space-y-1">
+                        <a href="#overview">Overview</a>
+                        <a href="#quick-start">Quick Start</a>
+                        <a href="#plugin-structure">Plugin Structure</a>
+                        <a href="#plugin-components">Plugin Components</a>
+                        <a href="#plugin-marketplaces">Plugin Marketplaces</a>
+                        <a href="#installing-managing">Installing & Managing</a>
+                        <a href="#team-workflows">Team Workflows</a>
+                        <a href="#best-practices">Best Practices</a>
+                    </nav>
+                    <div class="mt-8 p-4 bg-white/80 rounded-lg border border-claude-200">
+                        <h5 class="font-semibold text-claude-dark text-sm mb-2">Quick Reference</h5>
+                        <code class="text-xs text-claude-primary">/plugin</code>
+                        <p class="text-xs text-claude-dark/60 mt-1">Manage plugins</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 min-w-0">
+                <div class="prose max-w-none">
+                    <!-- Hero -->
+                    <div class="mb-12">
+                        <h1 class="text-4xl font-bold text-claude-dark mb-4" style="font-family: ui-serif, Georgia, serif;">Claude Code Plugins</h1>
+                        <p class="text-xl text-claude-dark/70">Package and distribute reusable Claude Code configurations, commands, agents, skills, and integrations as shareable plugins.</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Overview</h2>
+                        <p class="text-claude-dark/80">Plugins allow you to bundle Claude Code features into distributable packages. They can contain commands, agents, skills, hooks, and MCP server configurations - everything needed to extend Claude Code's capabilities.</p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Modular Architecture</h3>
+                                <p class="text-sm text-claude-dark/70">Bundle commands, agents, skills, and MCP servers together</p>
+                            </div>
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Easy Distribution</h3>
+                                <p class="text-sm text-claude-dark/70">Share plugins via marketplaces or direct installation</p>
+                            </div>
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Team Collaboration</h3>
+                                <p class="text-sm text-claude-dark/70">Share configurations across teams and projects</p>
+                            </div>
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Version Management</h3>
+                                <p class="text-sm text-claude-dark/70">Track and update plugin versions seamlessly</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Start -->
+                    <section id="quick-start" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Quick Start</h2>
+                        <p class="text-claude-dark/80">Create your first plugin in minutes:</p>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">1. Create Plugin Directory</h3>
+                        <pre><code class="language-bash">mkdir -p my-plugin/.claude-plugin
+cd my-plugin</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">2. Create plugin.json</h3>
+                        <pre><code class="language-json">{
+  "name": "my-awesome-plugin",
+  "description": "A plugin that does awesome things",
+  "version": "1.0.0",
+  "author": "Your Name",
+  "repository": "https://github.com/yourusername/my-plugin"
+}</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">3. Add Components</h3>
+                        <pre><code class="language-bash"># Add a command
+mkdir commands
+echo "Your command content" > commands/hello.md
+
+# Add an agent
+mkdir agents
+echo "---
+name: helper
+description: A helpful agent
+---
+Your agent prompt here" > agents/helper.md
+
+# Add a skill
+mkdir skills
+echo "Your skill content" > skills/SKILL.md</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">4. Install Locally</h3>
+                        <pre><code class="language-bash">claude /plugin install /path/to/my-plugin</code></pre>
+
+                        <div class="bg-claude-primary/10 border border-claude-primary/20 rounded-lg p-4 mt-4">
+                            <p class="text-sm text-claude-dark"><strong>Tip:</strong> Use <code>/plugin</code> command to see all available plugin management options.</p>
+                        </div>
+                    </section>
+
+                    <!-- Plugin Structure -->
+                    <section id="plugin-structure" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Plugin Structure</h2>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Directory Layout</h3>
+                        <pre><code class="language-bash">my-plugin/
+├── .claude-plugin/
+│   └── plugin.json          # Plugin metadata (required)
+├── commands/                # Custom slash commands
+│   ├── deploy.md
+│   └── test.md
+├── agents/                  # Sub-agents
+│   ├── reviewer.md
+│   └── debugger.md
+├── skills/                  # Reusable skills
+│   ├── SKILL.md
+│   └── another-skill/
+│       └── SKILL.md
+├── hooks/
+│   └── hooks.json          # Lifecycle hooks
+├── .mcp.json               # MCP server configurations
+└── README.md               # Plugin documentation</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">plugin.json Format</h3>
+                        <p class="text-claude-dark/80">The <code>plugin.json</code> file defines your plugin's metadata:</p>
+                        <pre><code class="language-json">{
+  "name": "string",              // Required: Unique plugin identifier
+  "description": "string",       // Required: Brief description
+  "version": "1.0.0",           // Required: Semantic version
+  "author": "string",           // Required: Author name or org
+  "repository": "url",          // Optional: Source repository
+  "homepage": "url",            // Optional: Documentation site
+  "license": "MIT",             // Optional: License identifier
+  "keywords": ["tag1", "tag2"], // Optional: Searchable tags
+  "dependencies": {             // Optional: Plugin dependencies
+    "other-plugin": "^1.0.0"
+  },
+  "engines": {                  // Optional: Claude Code version
+    "claude": ">=1.0.0"
+  }
+}</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Required Fields</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>name</code></td>
+                                    <td>string</td>
+                                    <td>Unique identifier (lowercase, hyphens allowed)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>description</code></td>
+                                    <td>string</td>
+                                    <td>Clear, concise plugin description</td>
+                                </tr>
+                                <tr>
+                                    <td><code>version</code></td>
+                                    <td>string</td>
+                                    <td>Semantic version (e.g., 1.0.0)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>author</code></td>
+                                    <td>string</td>
+                                    <td>Author name or organization</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Plugin Components -->
+                    <section id="plugin-components" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Plugin Components</h2>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Commands</h3>
+                        <p class="text-claude-dark/80">Add custom slash commands in the <code>commands/</code> directory:</p>
+                        <pre><code class="language-bash">commands/
+├── deploy.md           # Creates /deploy command
+└── run-tests.md        # Creates /run-tests command</code></pre>
+                        <p class="text-claude-dark/80">Each markdown file defines a command's behavior and prompt.</p>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Agents</h3>
+                        <p class="text-claude-dark/80">Include specialized sub-agents in the <code>agents/</code> directory:</p>
+                        <pre><code class="language-yaml">---
+name: code-reviewer
+description: Reviews code for quality and security
+tools: Read, Grep, Glob, Bash
+model: sonnet
+---
+
+You are an expert code reviewer specializing in security and best practices.
+Review code thoroughly and provide actionable feedback.</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Skills</h3>
+                        <p class="text-claude-dark/80">Package reusable skills in the <code>skills/</code> directory:</p>
+                        <pre><code class="language-bash">skills/
+├── SKILL.md                    # Root-level skill
+└── git-workflow/
+    └── SKILL.md                # Named skill</code></pre>
+                        <p class="text-claude-dark/80">Skills provide context and instructions that extend Claude's capabilities.</p>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Hooks</h3>
+                        <p class="text-claude-dark/80">Automate workflows with <code>hooks/hooks.json</code>:</p>
+                        <pre><code class="language-json">{
+  "hooks": [
+    {
+      "event": "beforeResponse",
+      "command": "npm test",
+      "description": "Run tests before responding"
+    },
+    {
+      "event": "afterEdit",
+      "command": "npm run lint",
+      "description": "Lint after code edits"
+    }
+  ]
+}</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">MCP Servers</h3>
+                        <p class="text-claude-dark/80">Bundle MCP integrations with <code>.mcp.json</code>:</p>
+                        <pre><code class="language-json">{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}</code></pre>
+                    </section>
+
+                    <!-- Plugin Marketplaces -->
+                    <section id="plugin-marketplaces" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Plugin Marketplaces</h2>
+                        <p class="text-claude-dark/80">Marketplaces allow you to discover and install plugins from centralized registries.</p>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">marketplace.json Structure</h3>
+                        <p class="text-claude-dark/80">Create a marketplace registry with a <code>marketplace.json</code> file:</p>
+                        <pre><code class="language-json">{
+  "name": "My Plugin Marketplace",
+  "description": "Curated collection of Claude Code plugins",
+  "plugins": [
+    {
+      "name": "git-workflow",
+      "description": "Enhanced Git workflow commands and agents",
+      "version": "1.2.0",
+      "author": "GitTools Team",
+      "repository": "https://github.com/gittools/git-workflow-plugin",
+      "installUrl": "https://github.com/gittools/git-workflow-plugin/archive/v1.2.0.zip",
+      "keywords": ["git", "workflow", "automation"]
+    },
+    {
+      "name": "test-automation",
+      "description": "Comprehensive testing and CI/CD automation",
+      "version": "2.0.1",
+      "author": "TestOps",
+      "repository": "https://github.com/testops/test-automation",
+      "installUrl": "https://github.com/testops/test-automation/archive/v2.0.1.zip",
+      "keywords": ["testing", "ci-cd", "automation"]
+    }
+  ]
+}</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Adding Marketplaces</h3>
+                        <pre><code class="language-bash"># Add a marketplace by URL
+claude /plugin marketplace add https://example.com/marketplace.json
+
+# Add a local marketplace
+claude /plugin marketplace add /path/to/marketplace.json
+
+# List configured marketplaces
+claude /plugin marketplace list</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Marketplace Fields</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>name</code></td>
+                                    <td>Yes</td>
+                                    <td>Marketplace display name</td>
+                                </tr>
+                                <tr>
+                                    <td><code>description</code></td>
+                                    <td>Yes</td>
+                                    <td>Brief marketplace description</td>
+                                </tr>
+                                <tr>
+                                    <td><code>plugins</code></td>
+                                    <td>Yes</td>
+                                    <td>Array of plugin definitions</td>
+                                </tr>
+                                <tr>
+                                    <td><code>plugins[].installUrl</code></td>
+                                    <td>Yes</td>
+                                    <td>Direct download link (zip, tar.gz, or git repo)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Installing & Managing Plugins -->
+                    <section id="installing-managing" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Installing & Managing Plugins</h2>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Plugin Commands</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>/plugin</code></td>
+                                    <td>Open plugin management interface</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/plugin install &lt;source&gt;</code></td>
+                                    <td>Install plugin from path, URL, or marketplace</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/plugin enable &lt;name&gt;</code></td>
+                                    <td>Enable an installed plugin</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/plugin disable &lt;name&gt;</code></td>
+                                    <td>Disable a plugin without uninstalling</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/plugin uninstall &lt;name&gt;</code></td>
+                                    <td>Remove a plugin completely</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/plugin list</code></td>
+                                    <td>Show all installed plugins</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/plugin marketplace add &lt;url&gt;</code></td>
+                                    <td>Add a plugin marketplace</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Installation Methods</h3>
+
+                        <h4 class="text-lg font-semibold text-claude-dark">From Local Path</h4>
+                        <pre><code class="language-bash">claude /plugin install /path/to/my-plugin</code></pre>
+
+                        <h4 class="text-lg font-semibold text-claude-dark">From Git Repository</h4>
+                        <pre><code class="language-bash">claude /plugin install https://github.com/username/plugin-name</code></pre>
+
+                        <h4 class="text-lg font-semibold text-claude-dark">From Marketplace</h4>
+                        <pre><code class="language-bash"># First add the marketplace
+claude /plugin marketplace add https://example.com/marketplace.json
+
+# Then install from marketplace
+claude /plugin install git-workflow</code></pre>
+
+                        <h4 class="text-lg font-semibold text-claude-dark">From Archive</h4>
+                        <pre><code class="language-bash">claude /plugin install https://example.com/plugins/my-plugin-v1.0.0.zip</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Plugin Storage Locations</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Scope</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>User plugins</td>
+                                    <td><code>~/.claude/plugins/</code></td>
+                                    <td>Available in all projects</td>
+                                </tr>
+                                <tr>
+                                    <td>Project plugins</td>
+                                    <td><code>.claude/plugins/</code></td>
+                                    <td>Current project only</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Team Plugin Workflows -->
+                    <section id="team-workflows" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Team Plugin Workflows</h2>
+                        <p class="text-claude-dark/80">Share plugins across your team using version control and project settings.</p>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Method 1: settings.json Reference</h3>
+                        <p class="text-claude-dark/80">Reference plugins in <code>.claude/settings.json</code>:</p>
+                        <pre><code class="language-json">{
+  "plugins": [
+    {
+      "source": "https://github.com/company/internal-plugin",
+      "enabled": true
+    },
+    {
+      "source": "./team-plugins/code-standards",
+      "enabled": true
+    }
+  ]
+}</code></pre>
+                        <p class="text-claude-dark/80">Team members will automatically be prompted to install these plugins when they open the project.</p>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Method 2: Vendored Plugins</h3>
+                        <p class="text-claude-dark/80">Include plugins directly in your repository:</p>
+                        <pre><code class="language-bash">.claude/
+├── settings.json
+└── plugins/
+    ├── team-workflows/
+    │   ├── .claude-plugin/
+    │   │   └── plugin.json
+    │   ├── commands/
+    │   └── agents/
+    └── company-standards/
+        └── .claude-plugin/
+            └── plugin.json</code></pre>
+                        <p class="text-claude-dark/80">Plugins in <code>.claude/plugins/</code> are automatically loaded for all team members.</p>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Method 3: Private Marketplace</h3>
+                        <p class="text-claude-dark/80">Host an internal marketplace for your organization:</p>
+                        <pre><code class="language-json">{
+  "name": "Acme Corp Internal Plugins",
+  "description": "Approved plugins for Acme developers",
+  "plugins": [
+    {
+      "name": "acme-deployment",
+      "description": "Deployment workflows for Acme infrastructure",
+      "version": "1.0.0",
+      "author": "Acme DevOps",
+      "repository": "https://github.com/acme/deployment-plugin",
+      "installUrl": "https://artifacts.acme.com/plugins/deployment-v1.0.0.zip"
+    }
+  ]
+}</code></pre>
+                        <p class="text-claude-dark/80">Team members add the marketplace once and can install approved plugins easily.</p>
+
+                        <div class="bg-claude-primary/10 border border-claude-primary/20 rounded-lg p-4 mt-4">
+                            <p class="text-sm text-claude-dark"><strong>Best Practice:</strong> Use Method 2 (vendored plugins) for project-specific plugins and Method 3 (private marketplace) for organization-wide plugins.</p>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Best Practices</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">1</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Version your plugins</h4>
+                                    <p class="text-claude-dark/70 text-sm">Use semantic versioning and maintain a changelog for plugin updates</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">2</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Document thoroughly</h4>
+                                    <p class="text-claude-dark/70 text-sm">Include README.md with setup instructions, usage examples, and requirements</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">3</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Keep plugins focused</h4>
+                                    <p class="text-claude-dark/70 text-sm">Each plugin should serve a single, well-defined purpose</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">4</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Test before publishing</h4>
+                                    <p class="text-claude-dark/70 text-sm">Verify all components work across different projects and environments</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">5</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Handle secrets securely</h4>
+                                    <p class="text-claude-dark/70 text-sm">Use environment variables for sensitive data, never hardcode credentials</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">6</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Namespace wisely</h4>
+                                    <p class="text-claude-dark/70 text-sm">Use clear, descriptive plugin names that avoid conflicts</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">7</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Minimize dependencies</h4>
+                                    <p class="text-claude-dark/70 text-sm">Keep plugin dependencies minimal to reduce installation complexity</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">8</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Provide examples</h4>
+                                    <p class="text-claude-dark/70 text-sm">Include sample configurations and usage scenarios in your documentation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Related Links -->
+                    <section class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Related</h2>
+                        <div class="grid md:grid-cols-3 gap-4 mt-4">
+                            <a href="agents.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">Sub-Agents</h4>
+                                <p class="text-sm text-claude-dark/70">Create specialized AI assistants for specific tasks</p>
+                            </a>
+                            <a href="commands.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">Commands</h4>
+                                <p class="text-sm text-claude-dark/70">Build custom slash commands for workflows</p>
+                            </a>
+                            <a href="skills.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">Skills</h4>
+                                <p class="text-sm text-claude-dark/70">Extend Claude with reusable capabilities</p>
+                            </a>
+                            <a href="hooks.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">Hooks</h4>
+                                <p class="text-sm text-claude-dark/70">Automate actions at lifecycle events</p>
+                            </a>
+                            <a href="tools.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">MCP Tools</h4>
+                                <p class="text-sm text-claude-dark/70">Integrate external tools and services</p>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-6 py-12 border-t border-claude-200">
+        <div class="text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">.C</span>
+                </div>
+                <span class="text-2xl font-bold text-claude-dark">.claude</span>
+            </div>
+            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60 mb-4">
+                <a href="index.html" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="features.html" class="hover:text-claude-primary transition-colors">Features</a>
+                <a href="tools.html" class="hover:text-claude-primary transition-colors">Tools</a>
+                <a href="configs.html" class="hover:text-claude-primary transition-colors">Configs</a>
+            </div>
+            <p class="text-xs text-claude-dark/50">Based on <a href="https://docs.claude.com/en/docs/claude-code/plugins" class="text-claude-primary hover:underline">official Anthropic documentation</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        });
+    </script>
+</body>
+</html>

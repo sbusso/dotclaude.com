@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(find:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "WebSearch",
+      "WebFetch(domain:htdocs.dev)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:www.anthropic.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:claude.com)"
     ],
     "deny": []
   }

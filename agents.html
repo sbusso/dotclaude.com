@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub-Agents - .claude Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        :root {
+            --claude-dark: #141413;
+            --claude-primary: #D97757;
+            --claude-primary-light: #E8917B;
+            --claude-cream: #F5F4ED;
+            --claude-cream-light: #FAF9F5;
+            --bg-primary: var(--claude-cream-light);
+            --bg-secondary: var(--claude-cream);
+            --bg-surface: rgba(255, 255, 255, 0.8);
+            --text-primary: var(--claude-dark);
+            --text-secondary: rgba(20, 20, 19, 0.8);
+            --text-muted: rgba(20, 20, 19, 0.7);
+            --border-color: #EFEEE3;
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --code-bg: #1a1a2e;
+        }
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-surface: rgba(26, 26, 26, 0.9);
+            --text-primary: #f5f4ed;
+            --text-secondary: rgba(245, 244, 237, 0.9);
+            --text-muted: rgba(245, 244, 237, 0.7);
+            --border-color: #333333;
+            --header-bg: rgba(26, 26, 26, 0.9);
+            --code-bg: #0d0d0d;
+        }
+        body { background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)); color: var(--text-primary); }
+        .bg-white\/90 { background-color: var(--header-bg) !important; }
+        .bg-white\/80, .bg-white { background-color: var(--bg-surface) !important; }
+        .text-claude-dark { color: var(--text-primary) !important; }
+        .text-claude-dark\/80 { color: var(--text-secondary) !important; }
+        .text-claude-dark\/70, .text-claude-dark\/60 { color: var(--text-muted) !important; }
+        .border-claude-200 { border-color: var(--border-color) !important; }
+        .bg-claude-dark { background-color: var(--claude-dark); }
+        .text-claude-primary { color: var(--claude-primary); }
+        .hover\:text-claude-primary:hover { color: var(--claude-primary); }
+        .theme-toggle { position: relative; width: 60px; height: 30px; background: var(--border-color); border-radius: 15px; cursor: pointer; transition: all 0.3s ease; }
+        .theme-toggle::before { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: var(--text-primary); border-radius: 50%; transition: all 0.3s ease; }
+        [data-theme="dark"] .theme-toggle::before { transform: translateX(30px); }
+        pre[class*="language-"] { background: var(--code-bg) !important; border-radius: 0.75rem; margin: 1rem 0; }
+        code[class*="language-"] { font-size: 0.875rem; }
+        .prose pre { background: var(--code-bg); padding: 1rem; border-radius: 0.75rem; overflow-x: auto; }
+        .prose code { background: rgba(0,0,0,0.1); padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.875rem; }
+        [data-theme="dark"] .prose code { background: rgba(255,255,255,0.1); }
+        .prose h2 { margin-top: 2rem; margin-bottom: 1rem; }
+        .prose h3 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .prose p, .prose ul, .prose ol { margin-bottom: 1rem; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .prose th, .prose td { border: 1px solid var(--border-color); padding: 0.75rem; text-align: left; }
+        .prose th { background: var(--bg-surface); font-weight: 600; }
+        .toc a { display: block; padding: 0.5rem 0; color: var(--text-muted); transition: color 0.2s; }
+        .toc a:hover { color: var(--claude-primary); }
+        .toc a.active { color: var(--claude-primary); font-weight: 600; }
+    </style>
+</head>
+<body class="font-sans min-h-screen">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">.C</span>
+                        </div>
+                        <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
+                    </a>
+                    <span class="text-claude-dark/60 text-lg">/ agents</span>
+                </div>
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
+                    <a href="features.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Features</a>
+                    <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
+                    <a href="configs.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
+                    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="flex gap-12">
+            <!-- Sidebar TOC -->
+            <aside class="hidden lg:block w-64 flex-shrink-0">
+                <div class="sticky top-24">
+                    <h4 class="font-semibold text-claude-dark mb-4">On this page</h4>
+                    <nav class="toc text-sm space-y-1">
+                        <a href="#overview">Overview</a>
+                        <a href="#quick-start">Quick Start</a>
+                        <a href="#configuration">Configuration</a>
+                        <a href="#built-in-agents">Built-in Agents</a>
+                        <a href="#example-agents">Example Agents</a>
+                        <a href="#best-practices">Best Practices</a>
+                        <a href="#advanced-usage">Advanced Usage</a>
+                    </nav>
+                    <div class="mt-8 p-4 bg-white/80 rounded-lg border border-claude-200">
+                        <h5 class="font-semibold text-claude-dark text-sm mb-2">Quick Reference</h5>
+                        <code class="text-xs text-claude-primary">/agents</code>
+                        <p class="text-xs text-claude-dark/60 mt-1">Open agent management</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 min-w-0">
+                <div class="prose max-w-none">
+                    <!-- Hero -->
+                    <div class="mb-12">
+                        <h1 class="text-4xl font-bold text-claude-dark mb-4" style="font-family: ui-serif, Georgia, serif;">Sub-Agents</h1>
+                        <p class="text-xl text-claude-dark/70">Specialized AI assistants that handle task-specific workflows with their own context windows, separate from the main conversation.</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Overview</h2>
+                        <p class="text-claude-dark/80">Subagents are specialized AI assistants in Claude Code that handle task-specific workflows. Each has a specific purpose, custom system prompt, and configurable tool access.</p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Context Preservation</h3>
+                                <p class="text-sm text-claude-dark/70">Separate context windows prevent main conversation pollution</p>
+                            </div>
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Specialized Expertise</h3>
+                                <p class="text-sm text-claude-dark/70">Fine-tuned for specific domains with custom prompts</p>
+                            </div>
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Reusability</h3>
+                                <p class="text-sm text-claude-dark/70">Share across projects and teams via version control</p>
+                            </div>
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center mb-4">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold text-claude-dark mb-2">Flexible Permissions</h3>
+                                <p class="text-sm text-claude-dark/70">Different tool access levels per subagent</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Start -->
+                    <section id="quick-start" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Quick Start</h2>
+                        <p class="text-claude-dark/80">Open the agents management interface with:</p>
+                        <pre><code class="language-bash">/agents</code></pre>
+                        <p class="text-claude-dark/80">This command lets you:</p>
+                        <ul class="list-disc pl-6 text-claude-dark/80">
+                            <li>Create new subagents (project-level or user-level)</li>
+                            <li>Edit existing subagents and their tool permissions</li>
+                            <li>Delete custom subagents</li>
+                            <li>View all subagents (built-in, user, project)</li>
+                        </ul>
+                        <div class="bg-claude-primary/10 border border-claude-primary/20 rounded-lg p-4 mt-4">
+                            <p class="text-sm text-claude-dark"><strong>Tip:</strong> Generate with Claude first, then customize. Press <code>e</code> to edit the system prompt in your own editor.</p>
+                        </div>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Configuration</h2>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">File Locations</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Scope</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Project subagents</td>
+                                    <td><code>.claude/agents/</code></td>
+                                    <td>Current project (highest priority)</td>
+                                </tr>
+                                <tr>
+                                    <td>User subagents</td>
+                                    <td><code>~/.claude/agents/</code></td>
+                                    <td>All projects</td>
+                                </tr>
+                                <tr>
+                                    <td>Plugin agents</td>
+                                    <td>Plugin's <code>agents/</code> directory</td>
+                                    <td>Plugin scope</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">File Format</h3>
+                        <pre><code class="language-yaml">---
+name: your-sub-agent-name
+description: Description of when this subagent should be invoked
+tools: Read, Grep, Glob, Bash  # Optional - inherits all tools if omitted
+model: sonnet  # Optional - 'sonnet', 'opus', 'haiku', or 'inherit'
+permissionMode: default  # Optional - default, acceptEdits, bypassPermissions
+skills: skill1, skill2  # Optional - auto-load skills
+---
+
+Your subagent's system prompt goes here. This can be multiple paragraphs
+and should clearly define the subagent's role, capabilities, and approach
+to solving problems.</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Configuration Fields</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>name</code></td>
+                                    <td>Yes</td>
+                                    <td>Unique identifier (lowercase letters and hyphens)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>description</code></td>
+                                    <td>Yes</td>
+                                    <td>Natural language description of purpose</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tools</code></td>
+                                    <td>No</td>
+                                    <td>Comma-separated tool list (inherits all if omitted)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>model</code></td>
+                                    <td>No</td>
+                                    <td><code>sonnet</code>, <code>opus</code>, <code>haiku</code>, or <code>inherit</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>skills</code></td>
+                                    <td>No</td>
+                                    <td>Comma-separated skill names to auto-load</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Available Tools</h3>
+                        <p class="text-claude-dark/80">Subagents can access any of Claude Code's internal tools:</p>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
+                            <code class="bg-claude-dark text-white px-3 py-2 rounded text-sm">Read</code>
+                            <code class="bg-claude-dark text-white px-3 py-2 rounded text-sm">Edit</code>
+                            <code class="bg-claude-dark text-white px-3 py-2 rounded text-sm">Write</code>
+                            <code class="bg-claude-dark text-white px-3 py-2 rounded text-sm">Bash</code>
+                            <code class="bg-claude-dark text-white px-3 py-2 rounded text-sm">Grep</code>
+                            <code class="bg-claude-dark text-white px-3 py-2 rounded text-sm">Glob</code>
+                        </div>
+                    </section>
+
+                    <!-- Built-in Agents -->
+                    <section id="built-in-agents" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Built-in Agents</h2>
+
+                        <div class="space-y-6">
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <h3 class="text-lg font-semibold text-claude-dark mb-2">General-Purpose Subagent</h3>
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Model: Sonnet</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Tools: All</span>
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Read & Write</span>
+                                </div>
+                                <p class="text-claude-dark/70 text-sm mb-3">Complex, multi-step tasks requiring both exploration and modification. Used when tasks need capable reasoning to interpret results.</p>
+                                <p class="text-claude-dark/60 text-xs"><strong>Example:</strong> "Find all places where we handle authentication and update them to use the new token format"</p>
+                            </div>
+
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <h3 class="text-lg font-semibold text-claude-dark mb-2">Plan Subagent</h3>
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Model: Sonnet</span>
+                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">Tools: Read, Glob, Grep, Bash</span>
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">Read-only</span>
+                                </div>
+                                <p class="text-claude-dark/70 text-sm mb-3">Research and analysis without modifications. Automatically used in plan mode to gather codebase context before presenting a plan.</p>
+                                <p class="text-claude-dark/60 text-xs"><strong>Example:</strong> Used when Claude is in plan mode and needs to research codebase</p>
+                            </div>
+
+                            <div class="bg-white/80 p-6 rounded-xl border border-claude-200">
+                                <h3 class="text-lg font-semibold text-claude-dark mb-2">Explore Subagent</h3>
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Model: Haiku (fast)</span>
+                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">Tools: Glob, Grep, Read, Bash</span>
+                                    <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">Strictly Read-only</span>
+                                </div>
+                                <p class="text-claude-dark/70 text-sm mb-3">Fast codebase search and analysis. More efficient than main agent doing multiple searches directly.</p>
+                                <p class="text-claude-dark/60 text-xs"><strong>Thoroughness levels:</strong> Quick, Medium, Very thorough</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Example Agents -->
+                    <section id="example-agents" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Example Agents</h2>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Code Reviewer</h3>
+                        <pre><code class="language-yaml">---
+name: code-reviewer
+description: Expert code review specialist. Proactively reviews code for quality, security, and maintainability. Use immediately after writing or modifying code.
+tools: Read, Grep, Glob, Bash
+model: inherit
+---
+
+You are a senior code reviewer ensuring high standards of code quality and security.
+
+When invoked:
+1. Run git diff to see recent changes
+2. Focus on modified files
+3. Begin review immediately
+
+Review checklist:
+- Code is clear and readable
+- Functions and variables are well-named
+- No duplicated code
+- Proper error handling
+- No exposed secrets or API keys
+- Input validation implemented
+- Good test coverage
+
+Provide feedback organized by priority:
+- Critical issues (must fix)
+- Warnings (should fix)
+- Suggestions (consider improving)</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Debugger</h3>
+                        <pre><code class="language-yaml">---
+name: debugger
+description: Debugging specialist for errors, test failures, and unexpected behavior. Use proactively when encountering any issues.
+tools: Read, Edit, Bash, Grep, Glob
+---
+
+You are an expert debugger specializing in root cause analysis.
+
+When invoked:
+1. Capture error message and stack trace
+2. Identify reproduction steps
+3. Isolate the failure location
+4. Implement minimal fix
+5. Verify solution works
+
+Debugging process:
+- Analyze error messages and logs
+- Check recent code changes
+- Form and test hypotheses
+- Add strategic debug logging
+
+For each issue, provide:
+- Root cause explanation
+- Evidence supporting the diagnosis
+- Specific code fix
+- Testing approach</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Test Writer</h3>
+                        <pre><code class="language-yaml">---
+name: test-writer
+description: Test generation specialist. Creates comprehensive test suites with edge cases. Use after implementing new features.
+tools: Read, Write, Bash, Grep, Glob
+model: sonnet
+---
+
+You are a test automation expert specializing in comprehensive test coverage.
+
+When invoked:
+1. Analyze the code to be tested
+2. Identify all code paths and edge cases
+3. Generate test cases with proper mocking
+4. Ensure tests are independent and repeatable
+
+Test categories:
+- Unit tests for individual functions
+- Integration tests for component interactions
+- Edge cases and boundary conditions
+- Error handling scenarios
+
+Best practices:
+- Use descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+- Mock external dependencies
+- Test both success and failure paths</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Best Practices</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">1</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Start with Claude-generated agents</h4>
+                                    <p class="text-claude-dark/70 text-sm">Generate initial subagent with Claude, then iterate to personalize</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">2</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Design focused subagents</h4>
+                                    <p class="text-claude-dark/70 text-sm">Single, clear responsibilities (not "do everything" agents)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">3</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Write detailed prompts</h4>
+                                    <p class="text-claude-dark/70 text-sm">Include specific instructions, examples, and constraints</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">4</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Limit tool access</h4>
+                                    <p class="text-claude-dark/70 text-sm">Grant only necessary tools for the subagent's purpose</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 bg-claude-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white font-bold text-sm">5</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-claude-dark">Version control</h4>
+                                    <p class="text-claude-dark/70 text-sm">Check project subagents into version control for team collaboration</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Advanced Usage -->
+                    <section id="advanced-usage" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Advanced Usage</h2>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Chaining Subagents</h3>
+                        <pre><code class="language-bash">> First use the code-analyzer subagent to find performance issues, then use the optimizer subagent to fix them</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">Resumable Subagents</h3>
+                        <p class="text-claude-dark/80">Continue previous subagent conversations with full context:</p>
+                        <pre><code class="language-bash"># Initial invocation
+> Use the code-analyzer agent to start reviewing the authentication module
+[Agent returns agentId: "abc123"]
+
+# Resume the agent
+> Resume agent abc123 and now analyze the authorization logic as well
+[Agent continues with full context from previous conversation]</code></pre>
+
+                        <h3 class="text-xl font-semibold text-claude-dark">CLI-Based Configuration</h3>
+                        <pre><code class="language-bash">claude --agents '{
+  "code-reviewer": {
+    "description": "Expert code reviewer. Use proactively after code changes.",
+    "prompt": "You are a senior code reviewer. Focus on code quality, security, and best practices.",
+    "tools": ["Read", "Grep", "Glob", "Bash"],
+    "model": "sonnet"
+  }
+}'</code></pre>
+                    </section>
+
+                    <!-- Related Links -->
+                    <section class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Related</h2>
+                        <div class="grid md:grid-cols-3 gap-4 mt-4">
+                            <a href="skills.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">Skills</h4>
+                                <p class="text-sm text-claude-dark/70">Extend agent capabilities with reusable skills</p>
+                            </a>
+                            <a href="hooks.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">Hooks</h4>
+                                <p class="text-sm text-claude-dark/70">Automate actions at agent lifecycle points</p>
+                            </a>
+                            <a href="plugins.html" class="bg-white/80 p-4 rounded-xl border border-claude-200 hover:border-claude-primary transition-colors">
+                                <h4 class="font-semibold text-claude-dark">Plugins</h4>
+                                <p class="text-sm text-claude-dark/70">Package and share agents with plugins</p>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-6 py-12 border-t border-claude-200">
+        <div class="text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="w-8 h-8 bg-claude-dark rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">.C</span>
+                </div>
+                <span class="text-2xl font-bold text-claude-dark">.claude</span>
+            </div>
+            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60 mb-4">
+                <a href="index.html" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="features.html" class="hover:text-claude-primary transition-colors">Features</a>
+                <a href="tools.html" class="hover:text-claude-primary transition-colors">Tools</a>
+                <a href="configs.html" class="hover:text-claude-primary transition-colors">Configs</a>
+            </div>
+            <p class="text-xs text-claude-dark/50">Based on <a href="https://docs.claude.com/en/docs/claude-code/sub-agents" class="text-claude-primary hover:underline">official Anthropic documentation</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        });
+    </script>
+</body>
+</html>

@@ -199,6 +199,7 @@
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
                     <a href="index.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
+                    <a href="features.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Features</a>
                     <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
                     <a href="configs.html" class="text-claude-primary font-medium">Configs</a>
                     <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
@@ -423,7 +424,97 @@
                 <p class="text-claude-dark/70 text-sm mb-4">TypeScript monorepo configuration with shared packages, workspace management, and build orchestration.</p>
                 <div class="flex items-center justify-between">
                     <span class="text-xs text-claude-dark/50">@sgcarstrends</span>
-                    <a href="https://github.com/hesreallyhim/awesome-claude-code" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Download →</a>
+                    <a href="https://github.com/hesreallyhim/awesome-claude-code" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Download</a>
+                </div>
+            </div>
+
+            <!-- Hooks: Auto-Format -->
+            <div class="config-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="workflow">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-workflow">Workflow</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Auto-Format Hooks</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">PostToolUse hooks that automatically run prettier, eslint, or black after file edits. Enforces code style without manual intervention.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">@sbusso</span>
+                    <a href="https://github.com/sbusso/claude-system" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Download</a>
+                </div>
+            </div>
+
+            <!-- Claude Workflow System -->
+            <div class="config-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="project">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-project">Project</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Claude System</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Complete agentic workflow system with MCPs (context7, sequential-thinking, memory, github), custom commands (/plan, /tdd, /commit, /pr), and review agents.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">@sbusso</span>
+                    <a href="https://github.com/sbusso/claude-system" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Download</a>
+                </div>
+            </div>
+
+            <!-- Code Review Agent -->
+            <div class="config-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="command">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-command">Command</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Code Review Agent</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Sub-agent configuration for automated code reviews. Runs in parallel, analyzes changes, and returns focused feedback without bloating main context.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">@sbusso</span>
+                    <a href="https://github.com/sbusso/claude-system" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Download</a>
+                </div>
+            </div>
+
+            <!-- Test Writer Agent -->
+            <div class="config-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="command">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-command">Command</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Test Writer Agent</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Sub-agent specialized in generating test cases. Analyzes code structure, edge cases, and generates comprehensive test suites with proper mocking.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">@sbusso</span>
+                    <a href="https://github.com/sbusso/claude-system" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Download</a>
+                </div>
+            </div>
+
+            <!-- Headless CI/CD Config -->
+            <div class="config-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="workflow">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-10 h-10 bg-claude-dark rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-workflow">Workflow</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Headless CI/CD</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">GitHub Actions workflow using Claude Code in headless mode. Automated issue triage, code reviews, and PR generation with JSON output.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Anthropic Official</span>
+                    <a href="https://docs.claude.com/en/docs/claude-code/github-actions" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">View Docs</a>
                 </div>
             </div>
 
@@ -482,11 +573,14 @@
                 <span class="text-2xl font-bold text-claude-dark">.claude</span>
             </div>
             <p class="text-claude-dark/60 mb-6">Your ultimate directory for Claude Code tools and configurations.</p>
-            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60">
+            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60 mb-4">
                 <a href="index.html" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="features.html" class="hover:text-claude-primary transition-colors">Features</a>
                 <a href="tools.html" class="hover:text-claude-primary transition-colors">Tools</a>
                 <a href="configs.html" class="hover:text-claude-primary transition-colors">Configs</a>
-                <a href="https://github.com/hesreallyhim/awesome-claude-code" class="hover:text-claude-primary transition-colors">Contribute</a>
+            </div>
+            <div class="text-xs text-claude-dark/50 text-center max-w-2xl mx-auto">
+                This website is not affiliated with Anthropic. It is a personal initiative with the idea of sharing practices and configurations to optimize workflows using Claude Code.
             </div>
         </div>
     </footer>

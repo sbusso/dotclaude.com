@@ -276,6 +276,7 @@
                     <h1 class="text-2xl font-bold text-claude-dark">.claude</h1>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="features.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Features</a>
                     <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
                     <a href="configs.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
                     <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
@@ -288,25 +289,25 @@
     <section class="max-w-6xl mx-auto px-6 py-16 text-center animate-fade-in">
         <div class="max-w-3xl mx-auto">
             <div class="inline-flex items-center px-4 py-2 bg-claude-200/50 rounded-lg mb-8 animate-float">
-                <span class="text-claude-primary font-medium text-sm">⚡ The Ultimate Claude Code Directory</span>
+                <span class="text-claude-primary font-medium text-sm">Agentic Coding Tools & Resources</span>
             </div>
-            
+
             <h1 class="text-5xl md:text-6xl font-bold text-claude-dark mb-6 leading-tight font-serif">
-                Your Curated Collection of 
-                <span class="text-gradient-claude">Claude Code</span> 
-                Excellence
+                Master
+                <span class="text-gradient-claude">Agentic Coding</span>
+                with Claude Code
             </h1>
-            
+
             <p class="text-xl text-claude-dark/80 mb-10 leading-relaxed">
-                Discover the most powerful configurations, tools, and workflows that make Claude Code an indispensable part of your development process. From CLAUDE.md templates to MCP integrations.
+                Discover sub-agents, plugins, hooks, MCP servers, and workflows that unlock the full potential of Claude Code. From CLAUDE.md templates to enterprise integrations.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="tools.html" class="px-8 py-4 bg-claude-dark text-white font-semibold rounded-lg hover:bg-claude-dark/90 hover:scale-105 transition-all duration-200">
-                    Explore Tools →
+                <a href="features.html" class="px-8 py-4 bg-claude-dark text-white font-semibold rounded-lg hover:bg-claude-dark/90 hover:scale-105 transition-all duration-200">
+                    Explore Features
                 </a>
-                <a href="configs.html" class="px-8 py-4 border-2 border-claude-dark text-claude-dark font-semibold rounded-lg hover:bg-white hover:border-claude-primary transition-all duration-200">
-                    Browse Configs
+                <a href="tools.html" class="px-8 py-4 border-2 border-claude-dark text-claude-dark font-semibold rounded-lg hover:bg-white hover:border-claude-primary transition-all duration-200">
+                    Browse MCP Tools
                 </a>
             </div>
         </div>
@@ -315,40 +316,40 @@
     <!-- Features Grid -->
     <section class="max-w-6xl mx-auto px-6 py-16">
         <div class="grid md:grid-cols-3 gap-8">
-            <!-- CLAUDE.md Templates -->
+            <!-- Sub-Agents -->
             <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-claude-200 hover:shadow-xl transition-all duration-300 animate-slide-up">
                 <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center mb-6">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-4">CLAUDE.md Templates</h3>
-                <p class="text-gray-700 mb-6">Curated collection of the most effective CLAUDE.md configurations for different project types, from React apps to Python backends.</p>
-                <a href="#" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">Browse Templates →</a>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Sub-Agents & Skills</h3>
+                <p class="text-gray-700 mb-6">Spawn specialized AI agents for parallel task execution. Each sub-agent has its own context, tools, and instructions for focused work.</p>
+                <a href="features.html" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">Learn More</a>
             </div>
 
-            <!-- MCP Integrations -->
+            <!-- Plugins & Hooks -->
             <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-claude-200 hover:shadow-xl transition-all duration-300 animate-slide-up-delay-1">
                 <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center mb-6">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-4">MCP Integrations</h3>
-                <p class="text-gray-700 mb-6">Essential Model Context Protocol servers and configurations that extend Claude Code's capabilities with external tools and APIs.</p>
-                <a href="#" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">View Integrations →</a>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Plugins & Hooks</h3>
+                <p class="text-gray-700 mb-6">Extend Claude Code with plugins bundling commands, agents, and MCP servers. Use hooks to automate quality gates and enforce standards.</p>
+                <a href="features.html" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">Explore Plugins</a>
             </div>
 
-            <!-- Custom Commands -->
+            <!-- MCP Integrations -->
             <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-claude-200 hover:shadow-xl transition-all duration-300 animate-slide-up-delay-2">
                 <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center mb-6">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-4">Custom Commands</h3>
-                <p class="text-gray-700 mb-6">Ready-to-use slash commands for common workflows like debugging, testing, documentation, and code reviews.</p>
-                <a href="#" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">Get Commands →</a>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">MCP Servers</h3>
+                <p class="text-gray-700 mb-6">Connect to 1000+ community servers via Model Context Protocol. Access databases, APIs, GitHub, Slack, and more from Claude Code.</p>
+                <a href="tools.html" class="text-claude-primary font-semibold hover:text-claude-900 transition-colors">Browse Tools</a>
             </div>
         </div>
     </section>
@@ -356,71 +357,71 @@
     <!-- What We Provide Section -->
     <section class="max-w-6xl mx-auto px-6 py-16">
         <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-claude-dark mb-4 font-serif">Everything You Need for Claude Code</h2>
-            <p class="text-xl text-claude-dark/70">An awesome list of tools, configurations, and best practices.</p>
+            <h2 class="text-4xl font-bold text-claude-dark mb-4 font-serif">Everything You Need for Agentic Coding</h2>
+            <p class="text-xl text-claude-dark/70">Tools, configurations, and best practices for autonomous development workflows.</p>
         </div>
-        
+
         <div class="grid md:grid-cols-2 gap-8">
             <div class="space-y-6">
                 <div class="flex items-start space-x-4">
                     <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                        <span class="text-claude-primary font-bold text-sm">1</span>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-claude-dark mb-2">Project Configuration Templates</h4>
-                        <p class="text-claude-dark/70">Tested CLAUDE.md files for popular frameworks and development environments.</p>
+                        <h4 class="font-semibold text-claude-dark mb-2">Sub-Agents & Parallel Execution</h4>
+                        <p class="text-claude-dark/70">Spawn specialized agents for research, testing, and code review. Each works in isolation, returning focused results.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-start space-x-4">
                     <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                        <span class="text-claude-primary font-bold text-sm">2</span>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-claude-dark mb-2">Workflow Automation</h4>
-                        <p class="text-claude-dark/70">Custom commands for TDD, debugging loops, and deployment processes.</p>
+                        <h4 class="font-semibold text-claude-dark mb-2">Plugins & Marketplaces</h4>
+                        <p class="text-claude-dark/70">Install curated plugins with slash commands, hooks, and MCP servers. Share via git repositories or plugin marketplaces.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-start space-x-4">
                     <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                        <span class="text-claude-primary font-bold text-sm">3</span>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-claude-dark mb-2">Integration Guides</h4>
-                        <p class="text-claude-dark/70">Step-by-step setup for GitHub, Docker, cloud platforms, and development tools.</p>
+                        <h4 class="font-semibold text-claude-dark mb-2">Hooks & Quality Gates</h4>
+                        <p class="text-claude-dark/70">Automate shell commands at lifecycle points. PreToolUse and PostToolUse hooks enforce standards automatically.</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="space-y-6">
                 <div class="flex items-start space-x-4">
                     <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                        <span class="text-claude-primary font-bold text-sm">4</span>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-claude-dark mb-2">Security Best Practices</h4>
-                        <p class="text-claude-dark/70">Safe configuration patterns and sandboxing recommendations.</p>
+                        <h4 class="font-semibold text-claude-dark mb-2">Extended Thinking Modes</h4>
+                        <p class="text-claude-dark/70">Trigger deeper reasoning with "think", "think hard", "think harder", or "ultrathink" for complex architectural decisions.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-start space-x-4">
                     <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                        <span class="text-claude-primary font-bold text-sm">5</span>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-claude-dark mb-2">Community Contributions</h4>
-                        <p class="text-claude-dark/70">Curated tools and configurations shared by the Claude Code community.</p>
+                        <h4 class="font-semibold text-claude-dark mb-2">Headless Mode & CI/CD</h4>
+                        <p class="text-claude-dark/70">Run Claude Code programmatically in GitHub Actions, GitLab CI, and automation pipelines with structured JSON output.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-start space-x-4">
                     <div class="w-8 h-8 bg-claude-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <span class="text-claude-primary font-bold text-sm">✓</span>
+                        <span class="text-claude-primary font-bold text-sm">6</span>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-claude-dark mb-2">Performance Optimization</h4>
-                        <p class="text-claude-dark/70">Tips for managing token usage, context optimization, and cost control.</p>
+                        <h4 class="font-semibold text-claude-dark mb-2">IDE & Slack Integration</h4>
+                        <p class="text-claude-dark/70">Native VS Code and JetBrains extensions. Hand off coding tasks from Slack with @mentions and PR generation.</p>
                     </div>
                 </div>
             </div>
@@ -488,11 +489,14 @@
                 <span class="text-2xl font-bold text-claude-dark">.claude</span>
             </div>
             <p class="text-claude-dark/60 mb-6">Your ultimate directory for Claude Code tools and configurations.</p>
-            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60">
+            <div class="flex justify-center space-x-8 text-sm text-claude-dark/60 mb-4">
                 <a href="index.html" class="hover:text-claude-primary transition-colors">Home</a>
+                <a href="features.html" class="hover:text-claude-primary transition-colors">Features</a>
                 <a href="tools.html" class="hover:text-claude-primary transition-colors">Tools</a>
                 <a href="configs.html" class="hover:text-claude-primary transition-colors">Configs</a>
-                <a href="https://github.com/hesreallyhim/awesome-claude-code" class="hover:text-claude-primary transition-colors">Contribute</a>
+            </div>
+            <div class="text-xs text-claude-dark/50 text-center max-w-2xl mx-auto">
+                This website is not affiliated with Anthropic. It is a personal initiative with the idea of sharing practices and configurations to optimize workflows using Claude Code.
             </div>
         </div>
     </footer>
