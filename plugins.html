@@ -47,6 +47,15 @@
         .theme-toggle { position: relative; width: 60px; height: 30px; background: var(--border-color); border-radius: 15px; cursor: pointer; transition: all 0.3s ease; }
         .theme-toggle::before { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: var(--text-primary); border-radius: 50%; transition: all 0.3s ease; }
         [data-theme="dark"] .theme-toggle::before { transform: translateX(30px); }
+        /* Dropdown navigation */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .nav-dropdown-toggle svg { width: 16px; height: 16px; transition: transform 0.2s; }
+        .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); min-width: 180px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px; opacity: 0; visibility: hidden; transition: all 0.2s; box-shadow: 0 10px 40px rgba(0,0,0,0.1); z-index: 100; }
+        .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+        .nav-dropdown-menu a { display: block; padding: 10px 14px; border-radius: 8px; font-size: 14px; color: var(--text-primary); transition: all 0.15s; }
+        .nav-dropdown-menu a:hover { background: var(--bg-secondary); color: var(--claude-primary); }
         pre[class*="language-"] { background: var(--code-bg) !important; border-radius: 0.75rem; margin: 1rem 0; }
         code[class*="language-"] { font-size: 0.875rem; }
         .prose pre { background: var(--code-bg); padding: 1rem; border-radius: 0.75rem; overflow-x: auto; }
@@ -78,8 +87,22 @@
                     <span class="text-claude-dark/60 text-lg">/ plugins</span>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Home</a>
-                    <a href="features.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Features</a>
+                    <div class="nav-dropdown">
+                        <span class="nav-dropdown-toggle text-claude-primary font-medium">
+                            Features
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </span>
+                        <div class="nav-dropdown-menu">
+                            <a href="agents.html">Sub-Agents</a>
+                            <a href="plugins.html">Plugins</a>
+                            <a href="hooks.html">Hooks</a>
+                            <a href="commands.html">Commands</a>
+                            <a href="mcp.html">MCP Servers</a>
+                            <a href="skills.html">Skills</a>
+                        </div>
+                    </div>
                     <a href="tools.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Tools</a>
                     <a href="configs.html" class="text-claude-dark hover:text-claude-primary transition-colors font-medium">Configs</a>
                     <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"></div>
