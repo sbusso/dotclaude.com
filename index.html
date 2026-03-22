@@ -316,6 +316,11 @@
 
 </head>
     <body class="bg-gradient-claude-bg min-h-screen font-sans">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" style="background: linear-gradient(90deg, var(--claude-dark), #2a2a29); color: #f5f4ed; text-align: center; padding: 10px 20px; font-size: 14px; position: relative; z-index: 60;">
+        🔧 <strong>New:</strong> <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary); text-decoration: underline; font-weight: 600;">ClaudeClaw</a> — A Claude Code plugin for always-on AI agents. Sandbox isolation, composable extensions, multi-channel messaging. <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary-light, #E8917B); margin-left: 8px;">Check it out →</a>
+    </div>
+
     <!-- Header -->
     <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4">
@@ -375,6 +380,47 @@
                 <a href="tools.html" class="px-8 py-4 border-2 border-claude-dark text-claude-dark font-semibold rounded-lg hover:bg-white hover:border-claude-primary transition-all duration-200">
                     Browse MCP Tools
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ClaudeClaw Featured Callout -->
+    <section class="max-w-6xl mx-auto px-6 pt-8 pb-4">
+        <div class="relative overflow-hidden rounded-2xl border-2 border-claude-primary/30" style="background: linear-gradient(135deg, var(--bg-surface-solid, #ffffff), var(--bg-secondary));">
+            <div class="absolute top-0 right-0 w-64 h-64 opacity-5" style="background: radial-gradient(circle, var(--claude-primary) 0%, transparent 70%);"></div>
+            <div class="p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-shrink-0">
+                    <div class="w-20 h-20 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, var(--claude-dark), #2a2a29);">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
+                        <h3 class="text-2xl font-bold text-claude-dark">ClaudeClaw</h3>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full" style="background: var(--claude-primary); color: white;">NEW</span>
+                    </div>
+                    <p class="text-claude-dark/80 text-lg mb-4">A Claude Code plugin that turns Claude into a persistent, always-on agent for your messaging channels. Sandbox isolation, composable extensions, structured memory, cost tracking — all in ~8K lines of code you own.</p>
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 text-sm text-claude-dark/60 mb-5">
+                        <span class="flex items-center gap-1">🔒 OS-level sandbox</span>
+                        <span>•</span>
+                        <span class="flex items-center gap-1">🧩 Composable extensions</span>
+                        <span>•</span>
+                        <span class="flex items-center gap-1">💬 Slack, Telegram, WhatsApp</span>
+                        <span>•</span>
+                        <span class="flex items-center gap-1">⚡ <10ms cold starts</span>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                        <a href="https://github.com/sbusso/claudeclaw" target="_blank" class="px-6 py-2.5 bg-claude-dark text-white font-semibold rounded-lg hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            View on GitHub
+                        </a>
+                        <a href="https://github.com/sbusso/claudeclaw#quick-start" target="_blank" class="px-6 py-2.5 border-2 border-claude-dark text-claude-dark font-semibold rounded-lg hover:border-claude-primary hover:text-claude-primary transition-colors">
+                            Quick Start →
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

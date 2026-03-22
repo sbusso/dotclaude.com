@@ -73,6 +73,11 @@
     </style>
 </head>
 <body class="font-sans min-h-screen">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" style="background: linear-gradient(90deg, var(--claude-dark), #2a2a29); color: #f5f4ed; text-align: center; padding: 10px 20px; font-size: 14px; position: relative; z-index: 60;">
+        🔧 <strong>New:</strong> <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary); text-decoration: underline; font-weight: 600;">ClaudeClaw</a> — A Claude Code plugin for always-on AI agents. Sandbox isolation, composable extensions, multi-channel messaging. <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary-light, #E8917B); margin-left: 8px;">Check it out →</a>
+    </div>
+
     <!-- Header -->
     <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4">
@@ -123,7 +128,11 @@
                         <a href="#plugin-structure">Plugin Structure</a>
                         <a href="#plugin-components">Plugin Components</a>
                         <a href="#plugin-marketplaces">Plugin Marketplaces</a>
+                        <a href="#persistent-state">Persistent State</a>
+                        <a href="#plugin-freshness">Plugin Freshness</a>
                         <a href="#installing-managing">Installing & Managing</a>
+                        <a href="#plugin-validation">Plugin Validation</a>
+                        <a href="#plugin-dirs">Plugin Directories</a>
                         <a href="#team-workflows">Team Workflows</a>
                         <a href="#best-practices">Best Practices</a>
                     </nav>
@@ -331,6 +340,51 @@ model: sonnet
 You are an expert code reviewer specializing in security and best practices.
 Review code thoroughly and provide actionable feedback.</code></pre>
 
+                        <h4 class="text-lg font-semibold text-claude-dark">Agent Frontmatter</h4>
+                        <p class="text-claude-dark/80">Plugins can ship agents with extended frontmatter fields to control agent behavior:</p>
+                        <pre><code class="language-yaml">---
+name: deep-researcher
+description: Thorough research agent
+tools: Read, Grep, Glob, Bash, WebSearch
+model: opus
+effort: thorough
+maxTurns: 50
+disallowedTools: Edit, Write
+---
+
+You are a research-only agent. Explore and analyze but never modify files.</code></pre>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>effort</code></td>
+                                    <td>string</td>
+                                    <td>Reasoning effort level (e.g., <code>thorough</code>, <code>default</code>)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>maxTurns</code></td>
+                                    <td>number</td>
+                                    <td>Maximum number of agentic turns the agent can take</td>
+                                </tr>
+                                <tr>
+                                    <td><code>disallowedTools</code></td>
+                                    <td>string</td>
+                                    <td>Comma-separated list of tools the agent cannot use</td>
+                                </tr>
+                                <tr>
+                                    <td><code>model</code></td>
+                                    <td>string</td>
+                                    <td>Model to use for the agent (e.g., <code>sonnet</code>, <code>opus</code>)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                         <h3 class="text-xl font-semibold text-claude-dark">Skills</h3>
                         <p class="text-claude-dark/80">Package reusable skills in the <code>skills/</code> directory:</p>
                         <pre><code class="language-bash">skills/
@@ -338,6 +392,42 @@ Review code thoroughly and provide actionable feedback.</code></pre>
 └── git-workflow/
     └── SKILL.md                # Named skill</code></pre>
                         <p class="text-claude-dark/80">Skills provide context and instructions that extend Claude's capabilities.</p>
+
+                        <h4 class="text-lg font-semibold text-claude-dark">Skill Frontmatter Enhancements</h4>
+                        <p class="text-claude-dark/80">Skills support frontmatter fields to control execution behavior:</p>
+                        <pre><code class="language-yaml">---
+effort: thorough
+maxTurns: 30
+disallowedTools: Edit, Write
+---
+
+Your skill instructions here...</code></pre>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>effort</code></td>
+                                    <td>string</td>
+                                    <td>Reasoning effort level for the skill execution</td>
+                                </tr>
+                                <tr>
+                                    <td><code>maxTurns</code></td>
+                                    <td>number</td>
+                                    <td>Maximum agentic turns when the skill is invoked</td>
+                                </tr>
+                                <tr>
+                                    <td><code>disallowedTools</code></td>
+                                    <td>string</td>
+                                    <td>Comma-separated tools to disallow during skill execution</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
                         <h3 class="text-xl font-semibold text-claude-dark">Hooks</h3>
                         <p class="text-claude-dark/80">Automate workflows with <code>hooks/hooks.json</code>:</p>
@@ -445,6 +535,56 @@ claude /plugin marketplace list</code></pre>
                                 </tr>
                             </tbody>
                         </table>
+                        <h3 class="text-xl font-semibold text-claude-dark">Settings-based Plugin Marketplace</h3>
+                        <p class="text-claude-dark/80">You can declare plugins inline directly in <code>settings.json</code> using <code>source: 'settings'</code>, without needing an external marketplace file or Git repository:</p>
+                        <pre><code class="language-json">{
+  "plugins": [
+    {
+      "source": "settings",
+      "name": "my-inline-plugin",
+      "commands": {
+        "deploy": "Deploy the current project to staging"
+      },
+      "enabled": true
+    }
+  ]
+}</code></pre>
+                        <p class="text-claude-dark/80">This is useful for lightweight, project-specific plugins that don't warrant a separate repository or directory.</p>
+                    </section>
+
+                    <!-- Persistent State -->
+                    <section id="persistent-state" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Plugin Persistent State</h2>
+                        <p class="text-claude-dark/80">Plugins can store persistent state that survives plugin updates using the <code>${CLAUDE_PLUGIN_DATA}</code> template variable. This resolves to a dedicated data directory for each plugin, separate from the plugin's own source files.</p>
+
+                        <pre><code class="language-json">{
+  "mcpServers": {
+    "my-db": {
+      "command": "node",
+      "args": ["server.js", "--data-dir", "${CLAUDE_PLUGIN_DATA}"]
+    }
+  }
+}</code></pre>
+
+                        <p class="text-claude-dark/80">Use <code>${CLAUDE_PLUGIN_DATA}</code> in your <code>.mcp.json</code>, hooks, or any configuration where you need a path that persists across plugin reinstalls and updates. The directory is created automatically and is unique per plugin.</p>
+
+                        <div class="bg-claude-primary/10 border border-claude-primary/20 rounded-lg p-4 mt-4">
+                            <p class="text-sm text-claude-dark"><strong>Tip:</strong> Store databases, caches, and configuration state in <code>${CLAUDE_PLUGIN_DATA}</code> so users don't lose data when updating your plugin.</p>
+                        </div>
+                    </section>
+
+                    <!-- Plugin Freshness -->
+                    <section id="plugin-freshness" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Plugin Freshness</h2>
+                        <p class="text-claude-dark/80">Plugins installed from Git repositories with a specific ref (branch, tag, or commit) are re-cloned on every load. This ensures you always get the latest version of the plugin at that ref, without needing to manually update.</p>
+
+                        <pre><code class="language-bash"># Install with a branch ref — always fresh on load
+claude /plugin install https://github.com/company/plugin#main
+
+# Install with a tag — pinned but still re-fetched
+claude /plugin install https://github.com/company/plugin#v2.0.0</code></pre>
+
+                        <p class="text-claude-dark/80">Ref-tracked plugins bypass the local cache entirely. If you need a stable, offline-capable install, omit the ref or use a local path instead.</p>
                     </section>
 
                     <!-- Installing & Managing Plugins -->
@@ -478,7 +618,7 @@ claude /plugin marketplace list</code></pre>
                                 </tr>
                                 <tr>
                                     <td><code>/plugin uninstall &lt;name&gt;</code></td>
-                                    <td>Remove a plugin completely</td>
+                                    <td>Remove a plugin (writes to <code>.claude/settings.local.json</code> for project scope)</td>
                                 </tr>
                                 <tr>
                                     <td><code>/plugin list</code></td>
@@ -531,6 +671,53 @@ claude /plugin install git-workflow</code></pre>
                                 </tr>
                             </tbody>
                         </table>
+                        <h3 class="text-xl font-semibold text-claude-dark">Plugin Project Scope</h3>
+                        <p class="text-claude-dark/80">When you run <code>/plugin uninstall</code>, the removal is written to <code>.claude/settings.local.json</code> rather than the shared <code>settings.json</code>. This ensures that uninstalling a plugin in your local environment does not affect other team members who share the same project settings.</p>
+                    </section>
+
+                    <!-- Plugin Validation -->
+                    <section id="plugin-validation" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Plugin Validation</h2>
+                        <p class="text-claude-dark/80">Use the <code>claude plugin validate</code> CLI command to check your plugin for correctness before publishing:</p>
+
+                        <pre><code class="language-bash"># Validate a plugin directory
+claude plugin validate /path/to/my-plugin</code></pre>
+
+                        <p class="text-claude-dark/80">The validator checks:</p>
+                        <ul class="list-disc ml-6 text-claude-dark/80">
+                            <li>Skill frontmatter fields (<code>effort</code>, <code>maxTurns</code>, <code>disallowedTools</code>)</li>
+                            <li>Agent frontmatter fields (<code>effort</code>, <code>maxTurns</code>, <code>disallowedTools</code>, <code>model</code>)</li>
+                            <li>Command frontmatter structure</li>
+                            <li><code>hooks.json</code> schema and event names</li>
+                            <li><code>plugin.json</code> required fields</li>
+                        </ul>
+
+                        <div class="bg-claude-primary/10 border border-claude-primary/20 rounded-lg p-4 mt-4">
+                            <p class="text-sm text-claude-dark"><strong>Tip:</strong> Run <code>claude plugin validate</code> in CI to catch plugin issues before they reach users.</p>
+                        </div>
+                    </section>
+
+                    <!-- Plugin Directories -->
+                    <section id="plugin-dirs" class="mb-12">
+                        <h2 class="text-2xl font-bold text-claude-dark">Plugin Directories</h2>
+
+                        <h3 class="text-xl font-semibold text-claude-dark"><code>--plugin-dir</code> Flag</h3>
+                        <p class="text-claude-dark/80">The <code>--plugin-dir</code> flag now accepts <strong>one path per flag</strong>. To specify multiple plugin directories, repeat the flag:</p>
+                        <pre><code class="language-bash"># New syntax (one path per flag)
+claude --plugin-dir /path/to/plugins-a --plugin-dir /path/to/plugins-b
+
+# Old syntax (colon-separated) — no longer supported
+# claude --plugin-dir /path/a:/path/b</code></pre>
+
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mt-4" style="background: rgba(217, 119, 87, 0.08); border-color: rgba(217, 119, 87, 0.2);">
+                            <p class="text-sm text-claude-dark"><strong>Breaking Change:</strong> The colon-separated syntax for <code>--plugin-dir</code> has been removed. Update any scripts or CI configurations to use one flag per directory.</p>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-claude-dark mt-6"><code>CLAUDE_CODE_PLUGIN_SEED_DIR</code></h3>
+                        <p class="text-claude-dark/80">The <code>CLAUDE_CODE_PLUGIN_SEED_DIR</code> environment variable supports multiple seed directories. Plugins found in these directories are automatically available without explicit installation:</p>
+                        <pre><code class="language-bash"># Set multiple seed directories (colon-separated on Unix, semicolon on Windows)
+export CLAUDE_CODE_PLUGIN_SEED_DIR="/opt/company-plugins:/home/user/my-plugins"</code></pre>
+                        <p class="text-claude-dark/80">Seed directories are scanned at startup. Each subdirectory containing a <code>.claude-plugin/plugin.json</code> is loaded as a plugin.</p>
                     </section>
 
                     <!-- Team Plugin Workflows -->

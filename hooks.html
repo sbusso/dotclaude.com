@@ -73,6 +73,11 @@
     </style>
 </head>
 <body class="font-sans min-h-screen">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" style="background: linear-gradient(90deg, var(--claude-dark), #2a2a29); color: #f5f4ed; text-align: center; padding: 10px 20px; font-size: 14px; position: relative; z-index: 60;">
+        🔧 <strong>New:</strong> <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary); text-decoration: underline; font-weight: 600;">ClaudeClaw</a> — A Claude Code plugin for always-on AI agents. Sandbox isolation, composable extensions, multi-channel messaging. <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary-light, #E8917B); margin-left: 8px;">Check it out →</a>
+    </div>
+
     <!-- Header -->
     <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4">
@@ -366,7 +371,7 @@
 
                             <div class="bg-white/80 p-4 rounded-lg border border-claude-200">
                                 <h4 class="font-semibold text-claude-dark mb-2">SessionEnd</h4>
-                                <p class="text-sm text-claude-dark/70 mb-2">Triggered when Claude Code session ends.</p>
+                                <p class="text-sm text-claude-dark/70 mb-2">Triggered when Claude Code session ends. Timeout is configurable via <code>CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS</code>.</p>
                                 <p class="text-xs text-claude-dark/60"><strong>Matcher:</strong> Not used</p>
                                 <p class="text-xs text-claude-dark/60"><strong>Use case:</strong> Cleanup, save state, generate reports</p>
                             </div>
@@ -390,6 +395,34 @@
                                 <p class="text-sm text-claude-dark/70 mb-2">Triggered before conversation history is compacted (when context limit is reached).</p>
                                 <p class="text-xs text-claude-dark/60"><strong>Matcher:</strong> Not used</p>
                                 <p class="text-xs text-claude-dark/60"><strong>Use case:</strong> Extract information before compaction, save context</p>
+                            </div>
+
+                            <div class="bg-white/80 p-4 rounded-lg border border-claude-200">
+                                <h4 class="font-semibold text-claude-dark mb-2">PostCompact</h4>
+                                <p class="text-sm text-claude-dark/70 mb-2">Fires after conversation compaction completes. Use to verify compacted state or perform post-compaction bookkeeping.</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Matcher:</strong> Not used</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Use case:</strong> Log compaction results, verify retained context, update external state</p>
+                            </div>
+
+                            <div class="bg-white/80 p-4 rounded-lg border border-claude-200">
+                                <h4 class="font-semibold text-claude-dark mb-2">StopFailure</h4>
+                                <p class="text-sm text-claude-dark/70 mb-2">Fires when a turn ends due to an API error such as rate limiting, authentication failure, or server errors.</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Matcher:</strong> Not used</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Use case:</strong> Error alerting, retry logic, logging API failures</p>
+                            </div>
+
+                            <div class="bg-white/80 p-4 rounded-lg border border-claude-200">
+                                <h4 class="font-semibold text-claude-dark mb-2">Elicitation</h4>
+                                <p class="text-sm text-claude-dark/70 mb-2">Triggered when an MCP server requests structured input from the user via an interactive dialog mid-task.</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Matcher:</strong> MCP server name</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Use case:</strong> Auto-fill MCP prompts, validate elicitation requests, logging</p>
+                            </div>
+
+                            <div class="bg-white/80 p-4 rounded-lg border border-claude-200">
+                                <h4 class="font-semibold text-claude-dark mb-2">ElicitationResult</h4>
+                                <p class="text-sm text-claude-dark/70 mb-2">Hooks can intercept and override elicitation responses before they are sent back to the MCP server.</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Matcher:</strong> MCP server name</p>
+                                <p class="text-xs text-claude-dark/60"><strong>Actions:</strong> Override response, block submission, modify values</p>
                             </div>
                         </div>
                     </section>
@@ -668,6 +701,12 @@ env_file = os.environ.get("CLAUDE_ENV_FILE")
 if env_file:
     # Load environment variables from file
     pass</code></pre>
+                            </div>
+
+                            <div class="bg-white/80 p-4 rounded-lg border border-claude-200">
+                                <code class="text-claude-primary font-semibold">CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS</code>
+                                <p class="text-sm text-claude-dark/70 mt-2">Configurable timeout (in milliseconds) for SessionEnd hooks. Allows longer-running cleanup tasks to complete before the session exits.</p>
+                                <pre class="mt-2"><code class="language-bash">export CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS=30000  # 30 seconds</code></pre>
                             </div>
                         </div>
                     </section>

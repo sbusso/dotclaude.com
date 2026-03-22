@@ -205,6 +205,11 @@
     </style>
 </head>
 <body class="font-sans" style="background: linear-gradient(135deg, var(--claude-cream-light), var(--claude-cream));">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" style="background: linear-gradient(90deg, var(--claude-dark), #2a2a29); color: #f5f4ed; text-align: center; padding: 10px 20px; font-size: 14px; position: relative; z-index: 60;">
+        🔧 <strong>New:</strong> <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary); text-decoration: underline; font-weight: 600;">ClaudeClaw</a> — A Claude Code plugin for always-on AI agents. Sandbox isolation, composable extensions, multi-channel messaging. <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary-light, #E8917B); margin-left: 8px;">Check it out →</a>
+    </div>
+
     <!-- Header -->
     <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4">
@@ -568,6 +573,114 @@
                 <div class="flex items-center justify-between">
                     <span class="text-xs text-claude-dark/50">Security</span>
                     <a href="https://docs.claude.com/en/docs/claude-code/sandboxing" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Voice Mode -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="core">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-core">Core</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Voice Mode</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Push-to-talk voice input with smart transcription. Rebindable keybindings, multi-language support, and automatic audio recovery.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Voice Input</span>
+                    <a href="commands.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Effort Control -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="workflow">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-workflow">Workflow</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Effort Control</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Fine-tune model reasoning with /effort command. Three levels (low/medium/high) let you balance speed vs depth per task.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">/effort command</span>
+                    <a href="commands.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Remote Control -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="extension">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-extension">Extensions</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Remote Control</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Bridge your terminal session to claude.ai/code. Continue coding from your browser or phone with /remote-control.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">/remote-control command</span>
+                    <a href="features.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Cost & Usage Tracking -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="enterprise">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-enterprise">Enterprise</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Cost & Usage Tracking</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Track token usage, rate limits, and estimated costs per session. Rate limit fields available in statusline scripts.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">Usage Analytics</span>
+                    <a href="features.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Channels -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="extension">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-extension">Extensions</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Channels</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Research preview: MCP servers push messages into sessions. Forward tool approval prompts to your phone for remote oversight.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">MCP Integration</span>
+                    <a href="mcp.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Context Optimization -->
+            <div class="feature-card bg-white/80 p-6 rounded-xl border border-claude-200 hover:shadow-lg transition-all duration-300" data-category="workflow">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-claude-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <span class="tag tag-workflow">Workflow</span>
+                </div>
+                <h3 class="text-lg font-semibold text-claude-dark mb-2">Context Optimization</h3>
+                <p class="text-claude-dark/70 text-sm mb-4">Identify context-heavy tools, memory bloat, and capacity warnings with /context. Get specific optimization tips.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-claude-dark/50">/context command</span>
+                    <a href="commands.html" class="text-claude-primary hover:text-claude-dark transition-colors text-sm font-medium">Learn More</a>
                 </div>
             </div>
 

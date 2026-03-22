@@ -73,6 +73,11 @@
     </style>
 </head>
 <body class="font-sans min-h-screen">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" style="background: linear-gradient(90deg, var(--claude-dark), #2a2a29); color: #f5f4ed; text-align: center; padding: 10px 20px; font-size: 14px; position: relative; z-index: 60;">
+        🔧 <strong>New:</strong> <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary); text-decoration: underline; font-weight: 600;">ClaudeClaw</a> — A Claude Code plugin for always-on AI agents. Sandbox isolation, composable extensions, multi-channel messaging. <a href="https://github.com/sbusso/claudeclaw" target="_blank" style="color: var(--claude-primary-light, #E8917B); margin-left: 8px;">Check it out →</a>
+    </div>
+
     <!-- Header -->
     <header class="bg-white/90 backdrop-blur-sm border-b border-claude-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4">
@@ -122,6 +127,7 @@
                         <a href="#creating-skills">Creating Skills</a>
                         <a href="#skill-format">SKILL.md Format</a>
                         <a href="#key-features">Key Features</a>
+                        <a href="#template-variables" style="padding-left: 1rem; font-size: 0.8rem;">Template Variables</a>
                         <a href="#examples">Examples</a>
                         <a href="#usage-discovery">Usage & Discovery</a>
                         <a href="#team-sharing">Team Sharing</a>
@@ -251,6 +257,12 @@
 name: skill-name
 description: Clear description of what this skill does and when to use it
 allowed-tools: Read, Grep, Glob
+disallowedTools:
+  - WebSearch
+  - WebFetch
+effort: high
+maxTurns: 10
+model: sonnet
 ---
 
 Your skill's instructions and context go here.
@@ -286,6 +298,26 @@ This can include:
                                     <td><code>allowed-tools</code></td>
                                     <td>No</td>
                                     <td>Comma-separated list of allowed tools (default: all tools)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>disallowedTools</code></td>
+                                    <td>No</td>
+                                    <td>Array of tool names to restrict from use during skill execution</td>
+                                </tr>
+                                <tr>
+                                    <td><code>effort</code></td>
+                                    <td>No</td>
+                                    <td>Override model effort level: <code>low</code>, <code>medium</code>, or <code>high</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>maxTurns</code></td>
+                                    <td>No</td>
+                                    <td>Limit the number of conversation turns for the skill</td>
+                                </tr>
+                                <tr>
+                                    <td><code>model</code></td>
+                                    <td>No</td>
+                                    <td>Override the model used: <code>opus</code>, <code>sonnet</code>, or <code>haiku</code></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -329,6 +361,62 @@ You are a security auditor. Review code for:
 
 IMPORTANT: You have read-only access. Report findings but do not modify code.</code></pre>
 
+                        <h3 class="text-xl font-semibold text-claude-dark">Model & Effort Overrides</h3>
+                        <p class="text-claude-dark/80">Control which model runs a skill and how much effort it applies:</p>
+                        <pre><code class="language-yaml">---
+name: quick-lint
+description: Use for fast syntax and style checks on small files
+effort: low
+model: haiku
+maxTurns: 3
+---
+
+Perform a quick lint pass. Report issues concisely.</code></pre>
+                        <pre><code class="language-yaml">---
+name: deep-architecture-review
+description: Use for thorough architectural analysis of complex systems
+effort: high
+model: opus
+maxTurns: 25
+disallowedTools:
+  - Write
+  - Edit
+  - Bash
+---
+
+Perform an exhaustive read-only architecture review...</code></pre>
+
+                        <h3 id="template-variables" class="text-xl font-semibold text-claude-dark">Template Variables</h3>
+                        <p class="text-claude-dark/80">Skills can use template variables that are resolved at runtime. These are especially useful for plugin-bundled skills that need to reference persistent state or their own source files:</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Variable</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>${CLAUDE_PLUGIN_DATA}</code></td>
+                                    <td>Plugin persistent state directory — use for storing data that should survive across sessions</td>
+                                </tr>
+                                <tr>
+                                    <td><code>${CLAUDE_PLUGIN_ROOT}</code></td>
+                                    <td>Plugin source code directory — use to reference bundled templates, scripts, or config files</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pre><code class="language-yaml">---
+name: my-plugin-skill
+description: Use when running plugin-specific workflows that need persistent state
+---
+
+Load configuration from ${CLAUDE_PLUGIN_ROOT}/config/defaults.json
+
+Store results in ${CLAUDE_PLUGIN_DATA}/output/
+
+Reference templates at ${CLAUDE_PLUGIN_ROOT}/templates/</code></pre>
+
                         <h3 class="text-xl font-semibold text-claude-dark">Progressive File Loading</h3>
                         <p class="text-claude-dark/80">Supporting files in skill directories are loaded automatically when relevant:</p>
                         <pre><code class="language-bash">api-testing/
@@ -338,7 +426,7 @@ IMPORTANT: You have read-only access. Report findings but do not modify code.</c
     post-request.json   # Loaded if Claude needs POST examples
   templates/
     test-suite.js       # Loaded if creating test suites</code></pre>
-                        <p class="text-claude-dark/80">This keeps the initial skill context small while making additional resources available when needed.</p>
+                        <p class="text-claude-dark/80">This keeps the initial skill context small while making additional resources available when needed. Files are progressively loaded based on context relevance, ensuring skills remain lightweight while having rich supporting resources available on demand.</p>
 
                         <h3 class="text-xl font-semibold text-claude-dark">Priority Order</h3>
                         <p class="text-claude-dark/80">When skills have the same name, Claude Code prioritizes:</p>
@@ -632,7 +720,7 @@ git pull</code></pre>
                                 </tr>
                                 <tr>
                                     <td><strong>Tool Access</strong></td>
-                                    <td>Configurable via <code>allowed-tools</code></td>
+                                    <td>Configurable via <code>allowed-tools</code> and <code>disallowedTools</code></td>
                                     <td>Full tool access in command implementation</td>
                                 </tr>
                                 <tr>
