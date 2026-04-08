@@ -201,6 +201,18 @@
             background-color: var(--icon-bg) !important;
         }
     </style>
+<!-- OpenPanel Analytics -->
+<script>
+	window.op=window.op||function(){var n=[];return new Proxy(function(){arguments.length&&n.push([].slice.call(arguments))},{get:function(t,r){return"q"===r?n:function(){n.push([r].concat([].slice.call(arguments)))}},has:function(t,r){return"q"===r}})}();
+	window.op('init', {
+		apiUrl: 'https://o.inbocks.com/api',
+		clientId: '6d9cae34-3b5d-43c0-a264-c98ff4ba48de',
+		trackScreenViews: true,
+		trackOutgoingLinks: true,
+		trackAttributes: true,
+	});
+</script>
+<script src="https://o.inbocks.com/op1.js" defer async></script>
 </head>
 <body class="font-sans" style="background: linear-gradient(135deg, var(--claude-cream-light), var(--claude-cream));">
     <!-- Announcement Bar -->
